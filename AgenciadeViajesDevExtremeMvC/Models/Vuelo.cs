@@ -81,8 +81,6 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             get { return _origen; }
             set
             {
-                if (value == null)
-                    throw new ArgumentException("El origen no puede ser nulo");
                 _origen = value;
             }
         }
@@ -93,8 +91,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             get { return _destino; }
             set
             {
-                if (value == null)
-                    throw new ArgumentException("El destino no puede ser nulo");
+                
                 _destino = value;
             }
         }

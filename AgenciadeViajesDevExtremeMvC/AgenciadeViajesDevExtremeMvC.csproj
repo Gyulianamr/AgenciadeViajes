@@ -352,6 +352,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
+    <Content Include="Views\Home\Paquete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -365,9 +366,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ActividadesController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\DestinoController.cs" />
+    <Compile Include="Controllers\GuiaTuristicoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotelController.cs" />
+    <Compile Include="Controllers\Paquete_TuristicoController.cs" />
     <Compile Include="Controllers\SampleDataController.cs" />
+    <Compile Include="Controllers\SeguroController.cs" />
+    <Compile Include="Controllers\VueloController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

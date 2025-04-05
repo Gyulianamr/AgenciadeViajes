@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Paquete";
+}
+
+<h2>Paquete</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Paquete_Turistico>()
+        .DataSource(ds => ds.WebApi()
+            .Controller("Paquete_Turistico")
+            .LoadAction("Get")
+            .InsertAction("Post")
+            .UpdateAction("Put")
+            .DeleteAction("Delete")
+            .Key("Id")
+        )
+
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.Nombre);
+
+        columns.AddFor(m => m.PrecioTotal);
+
+        columns.AddFor(m => m.DestinoId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Destino").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("NomDestino")
+        );
+
+        columns.AddFor(m => m.VueloId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Vuelo").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("Nombre")
+        );
+
+        columns.AddFor(m => m.HotelId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Hotel").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("Nombre")
+        );
+
+        columns.AddFor(m => m.SeguroId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Seguro").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("Nombre")
+        );
+
+        columns.AddFor(m => m.GuiaTuristicoId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("GuiaTuristico").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("Nombre")
+        );
+
+        columns.AddFor(m => m.ActividadesId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Actividades").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("Nombre")
+        );
+
+        columns.AddFor(m => m.Duracion_Dias);
+
+        columns.AddFor(m => m.FechaExpiracion);
+
+        columns.AddFor(m => m.Estado);
+    })
+    .Editing(e => e
+       .Mode(GridEditMode.Popup)
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+    .Paging(p => p.PageSize(10))
+.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 5, 10, 20 }))
+.FilterRow(f => f.Visible(true))
+.SearchPanel(s => s.Visible(true).Width(240))
+)

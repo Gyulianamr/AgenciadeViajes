@@ -13,6 +13,22 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers {
         public ActionResult Cliente()
         {
             return View();
+
+
+        }
+
+        public ActionResult Paquete_Turistico()
+        {
+            return View();
+
+
+        }
+
+        public ActionResult Paquete()
+        {
+            return View();
+
+
         }
     }
 }
