@@ -30,5 +30,12 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers {
 
 
         }
+
+        public ActionResult Reservacion()
+        {
+            return View();
+
+
+        }
     }
 }
