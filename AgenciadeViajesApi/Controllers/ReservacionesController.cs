@@ -25,21 +25,17 @@ namespace AgenciadeViajesApi.Controllers
                          select new
                          {
                              Id = reserva.Id,
-                             CotizacionId = cotizacion.Id,
+                             IdCotizacion = cotizacion.Id,
                              ClienteNombre = cliente.Nombre,
                              FechaReservacion = reserva.FechaReservacion,
                              Estado = reserva.Estado,
                              FechaViaje = reserva.FechaViaje,
                              FechaRegreso = reserva.FechaRegreso,
                              MontoPagado = reserva.MontoPagado,
-                             SaldoPendiente = reserva.Saldopendiente
+                             Saldopendiente = cotizacion.CostoTotal - reserva.MontoPagado
                          };
 
-            if (!result.Any())
-            {
-                return NotFound();
-            }
-
+           
             return Ok(result);
         }
 

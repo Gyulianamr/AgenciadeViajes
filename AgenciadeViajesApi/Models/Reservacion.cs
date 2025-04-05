@@ -22,7 +22,7 @@ namespace AgenciadeViajesApi.Models
         public DateTime FechaViaje { get; set; }
         public DateTime FechaRegreso { get; set; }
         public double MontoPagado { get; set; }
-        public double Saldopendiente { get; private set; }
+        public double Saldopendiente { get;  set; }
 
         // Constructor vacío
         public Reservacion() { }
