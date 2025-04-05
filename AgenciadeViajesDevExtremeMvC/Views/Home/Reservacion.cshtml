@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Reservacion";
+}
+
+<h2>Reservacion</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Reservacion>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("Reservacion")
+        .LoadAction("Get")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.IdCotizacion);
+
+        columns.AddFor(m => m.FechaReservacion);
+
+        columns.AddFor(m => m.Estado);
+
+        columns.AddFor(m => m.FechaViaje);
+
+        columns.AddFor(m => m.FechaRegreso);
+
+        columns.AddFor(m => m.MontoPagado);
+
+        columns.AddFor(m => m.Saldopendiente);
+    })
+)

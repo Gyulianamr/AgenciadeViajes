@@ -353,6 +353,7 @@
   <ItemGroup>
     <Content Include="Web.config" />
     <Content Include="Views\Home\Paquete.cshtml" />
+    <Content Include="Views\Home\Reservacion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -373,6 +374,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\Paquete_TuristicoController.cs" />
+    <Compile Include="Controllers\ReservacionController.cs" />
     <Compile Include="Controllers\SampleDataController.cs" />
     <Compile Include="Controllers\SeguroController.cs" />
     <Compile Include="Controllers\VueloController.cs" />

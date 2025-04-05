@@ -9,12 +9,12 @@ namespace AgenciadeViajesDevExtremeMvC.Models
 {
     public class Reservacion
     {
-        [Key]
+      
         public int Id { get; set; }
 
         public int IdCotizacion { get; set; }
 
-        [ForeignKey("IdCotizacion")]
+    
         public virtual Cotizacion Cotizacion { get; set; }
 
         public DateTime FechaReservacion { get; set; }
