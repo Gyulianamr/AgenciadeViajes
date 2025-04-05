@@ -26,6 +26,10 @@ namespace AgenciadeViajesApi.Controllers
         private Proyectodb db = new Proyectodb();
 
         // GET: api/PaquetesTuristicos
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IHttpActionResult Get()
         {
             var result = from paquete in db.PaqueteTuristicos
@@ -59,6 +63,11 @@ namespace AgenciadeViajesApi.Controllers
         }
 
         // GET: api/PaquetesTuristicos/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Paquete_Turistico))]
         public IHttpActionResult Get(int id)
         {
@@ -159,6 +168,12 @@ namespace AgenciadeViajesApi.Controllers
         }
 
         // PUT: api/PaquetesTuristicos/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="paquete"></param>
+        /// <returns></returns>
         [ResponseType(typeof(void))]
         public IHttpActionResult Put(int id, Paquete_Turistico paquete)
         {
