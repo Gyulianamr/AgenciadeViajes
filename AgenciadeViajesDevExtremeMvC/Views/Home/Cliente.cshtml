@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Cliente";
+}
+
+<h2>Cliente</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Cliente>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("Cliente")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.Nombre);
+
+        columns.AddFor(m => m.Apellido);
+        columns.AddFor(m => m.Ciudad);
+
+        columns.AddFor(m => m.Telefono);
+
+        columns.AddFor(m => m.Correo);
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+)
