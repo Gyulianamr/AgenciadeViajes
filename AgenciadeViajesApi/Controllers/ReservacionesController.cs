@@ -19,26 +19,30 @@ namespace AgenciadeViajesApi.Controllers
         /// <returns>Lista de reservaciones</returns>
         public IHttpActionResult Get()
         {
-            var reservaciones = from R in db.Reservas
-                                select new
-                                {
-                                    R.Id,
-                                    CotizacionId = R.Cotizacion.Id,
-                                    FechaReservacion = R.FechaReservacion,
-                                    Estado = R.Estado,
-                                    FechaViaje = R.FechaViaje,
-                                    FechaRegreso = R.FechaRegreso,
-                                    MontoPagado = R.MontoPagado,
-                                    SaldoPendiente = R.Saldopendiente
-                                };
+            var result = from reserva in db.Reservas
+                         join cotizacion in db.Cotizaciones on reserva.IdCotizacion equals cotizacion.Id
+                         join cliente in db.Clientes on cotizacion.ClienteId equals cliente.Id
+                         select new
+                         {
+                             Id = reserva.Id,
+                             CotizacionId = cotizacion.Id,
+                             ClienteNombre = cliente.Nombre,
+                             FechaReservacion = reserva.FechaReservacion,
+                             Estado = reserva.Estado,
+                             FechaViaje = reserva.FechaViaje,
+                             FechaRegreso = reserva.FechaRegreso,
+                             MontoPagado = reserva.MontoPagado,
+                             SaldoPendiente = reserva.Saldopendiente
+                         };
 
-            if (!reservaciones.Any())
+            if (!result.Any())
             {
                 return NotFound();
             }
 
-            return Ok(reservaciones);
+            return Ok(result);
         }
+
 
         /// <summary>
         /// Obtiene una reservación por su ID.
