@@ -1,13 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Reservacion";
+    ViewData["Title"] = "Reserva";
 }
 
-<h2>Reservacion</h2>
+<h2>Reserva</h2>
 
 @(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Reservacion>()
     .DataSource(ds => ds.WebApi()
         .Controller("Reservacion")
         .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
         .Key("Id")
     )
     .RemoteOperations(true)
@@ -15,7 +18,11 @@
 
         columns.AddFor(m => m.Id);
 
-        columns.AddFor(m => m.IdCotizacion);
+        columns.AddFor(m => m.IdCotizacion).Lookup(lookup => lookup
+    .DataSource(ds => ds.WebApi().Controller("Cotizacion").LoadAction("Get").Key("Id"))
+    .ValueExpr("Id")
+    .DisplayExpr("ClienteId")
+);
 
         columns.AddFor(m => m.FechaReservacion);
 
@@ -29,4 +36,9 @@
 
         columns.AddFor(m => m.Saldopendiente);
     })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
 )

@@ -17,12 +17,7 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers {
 
         }
 
-        public ActionResult Paquete_Turistico()
-        {
-            return View();
-
-
-        }
+       
 
         public ActionResult Paquete()
         {
@@ -31,7 +26,14 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers {
 
         }
 
-        public ActionResult Reservacion()
+        public ActionResult Reserva()
+        {
+            return View();
+
+
+        }
+
+        public ActionResult Cotizacion()
         {
             return View();
 
