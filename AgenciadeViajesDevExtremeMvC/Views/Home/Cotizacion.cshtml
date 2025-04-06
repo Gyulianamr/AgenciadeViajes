@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Cotizacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cotizacion</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Cotizacion>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("Cotizacion")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.ClienteId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Cliente").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("Nombre")
+        );
+
+        columns.AddFor(m => m.AgenteResponsableId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("AgentedeViaje").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("Nombre")
+        );
+
+        columns.AddFor(m => m.PaqueteId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Paquete_Turistico").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("Nombre")
+        );
+
+        columns.AddFor(m => m.CantidadPersonas);
+
+        columns.AddFor(m => m.FechaCotizacion);
+
+        columns.AddFor(m => m.CostoTotal);
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+)
