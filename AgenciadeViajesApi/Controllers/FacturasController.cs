@@ -19,24 +19,22 @@ namespace AgenciadeViajesApi.Controllers
         /// <returns>Lista de facturas</returns>
         public IHttpActionResult Get()
         {
-            var facturas = from F in db.Factura
-                           select new
-                           {
-                               F.Id,
-                               ReservacionId = F.Reservacion.Id,
-                               FechaPago = F.FechaPago,
-                               MontoPagado = F.MontoPagado,
-                               MetodoPagoId = F.MetodoPago.Id,
-                               Estado = F.Estado
-                           };
+            var result = from factura in db.Factura
+                         join reservacion in db.Reservas on factura.ReservacionId equals reservacion.Id
+                         join metodoPago in db.MetododePagos on factura.MetodoPagoId equals metodoPago.Id
+                         select new
+                         {
+                             Id = factura.Id,
+                             ReservacionId = reservacion.IdCotizacion,
+                             FechaPago = factura.FechaPago,
+                             MontoPagado = factura.MontoPagado,
+                             MetodoPago = metodoPago.Nombre, // Asumí que hay un campo 'Nombre' en MetodoPago, cámbialo si es necesario
+                             Estado = factura.Estado
+                         };
 
-            if (!facturas.Any())
-            {
-                return NotFound();
-            }
-
-            return Ok(facturas);
+            return Ok(result);
         }
+
 
         /// <summary>
         /// Obtiene una factura por su ID.
@@ -45,25 +43,27 @@ namespace AgenciadeViajesApi.Controllers
         /// <returns>Factura correspondiente al ID</returns>
         public IHttpActionResult Get(int id)
         {
-            var factura = db.Factura
-                            .Where(F => F.Id == id)
-                            .Select(F => new
-                            {
-                                F.Id,
-                                ReservacionId = F.Reservacion.Id,
-                                FechaPago = F.FechaPago,
-                                MontoPagado = F.MontoPagado,
-                                MetodoPagoId = F.MetodoPago.Id,
-                                Estado = F.Estado
-                            })
-                            .FirstOrDefault();
+            var result = from factura in db.Factura
+                         join reservacion in db.Reservas on factura.ReservacionId equals reservacion.Id
+                         join metodoPago in db.MetododePagos on factura.MetodoPagoId equals metodoPago.Id
+                         select new
+                         {
+                             Id = factura.Id,
+                             ReservacionId = reservacion.Id,
+                             FechaPago = factura.FechaPago,
+                             MontoPagado = factura.MontoPagado,
+                             MetodoPagoId = metodoPago.Id,
+                             Estado = factura.Estado
+                         };
 
-            if (factura == null)
+            var facturaResult = result.FirstOrDefault(f => f.Id == id);
+
+            if (facturaResult == null)
             {
                 return NotFound();
             }
 
-            return Ok(factura);
+            return Ok(facturaResult);
         }
 
         /// <summary>
