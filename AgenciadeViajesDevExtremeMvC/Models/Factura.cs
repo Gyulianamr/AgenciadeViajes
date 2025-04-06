@@ -38,15 +38,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
         public Factura() { }
 
         // Constructor con parámetros
-        public Factura(int idPago, Reservacion reservacion, DateTime fechaPago, double montoPagado, Metodo_Pago metodoPago, string estado)
-        {
-            Id = idPago;
-            Reservacion = reservacion ?? throw new ArgumentNullException(nameof(reservacion), "La reservación no puede ser nula.");
-            FechaPago = fechaPago > DateTime.Now ? throw new ArgumentException("La fecha de pago no puede ser futura") : fechaPago;
-            MontoPagado = montoPagado <= 0 ? throw new ArgumentException("El monto pagado debe ser mayor a 0") : montoPagado;
-            MetodoPago = metodoPago ?? throw new ArgumentNullException(nameof(metodoPago), "El método de pago no puede ser nulo.");
-            Estado = string.IsNullOrWhiteSpace(estado) ? throw new ArgumentException("El estado no puede estar vacío") : estado;
-        }
+      
 
         // Método para determinar si el pago está completo
         public bool EsPagoCompleto()

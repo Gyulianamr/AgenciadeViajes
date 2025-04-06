@@ -355,6 +355,7 @@
     <Content Include="Views\Home\Paquete.cshtml" />
     <Content Include="Views\Home\Reserva.cshtml" />
     <Content Include="Views\Home\Cotizacion.cshtml" />
+    <Content Include="Views\Home\Factura.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -377,6 +378,7 @@
     <Compile Include="Controllers\GuiaTuristicoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
+    <Compile Include="Controllers\MetodoPagoController.cs" />
     <Compile Include="Controllers\Paquete_TuristicoController.cs" />
     <Compile Include="Controllers\ReservacionController.cs" />
     <Compile Include="Controllers\SampleDataController.cs" />
