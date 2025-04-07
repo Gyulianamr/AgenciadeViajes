@@ -18,14 +18,10 @@ namespace AgenciadeViajesApi.Controllers
         /// <summary>
         /// Obtiene todos los métodos de pago registrados
         /// </summary>
-        /// <param name="incluirInactivos">Indica si se deben incluir métodos inactivos (valor predeterminado: false)</param>
         /// <returns>Lista de métodos de pago</returns>
-        public IHttpActionResult Get(bool incluirInactivos = false)
+        public IEnumerable<Metodo_Pago> Get()  
         {
-            var query = from m in db.MetododePagos
-                        where incluirInactivos || m.Activo
-                        select m;
-            return Ok(query.ToList());
+          return db.MetododePagos;  
         }
 
         // GET: api/MetodoPago/5
