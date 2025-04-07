@@ -1,2 +1,165 @@
+/* Estilos generales */
 body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    overflow-x: hidden; /* Evitar que se mueva horizontalmente */
+    background-color: #f4f6f9; /* Fondo claro */
+}
+
+/* Viñeta en la parte superior con un azul claro */
+.navbar-header {
+    background-color: #70a1d7; /* Azul claro */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegura que la viñeta esté por encima de todo */
+}
+
+/* Menú lateral con una gama de azules y un efecto de sombra */
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    background: linear-gradient(to bottom, #1e3a8a, #3b82f6); /* De un azul oscuro a un azul más brillante */
+    color: white;
+    padding-top: 20px;
+    padding-left: 15px;
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    transition: transform 0.3s ease;
+}
+
+/* Botón para ocultar/mostrar el menú */
+.navbar-toggle {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: -40px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+    .navbar-toggle:hover {
+        background-color: #1e3a8a;
+    }
+
+/* Menú lateral: enlaces con efectos */
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    margin: 1rem 0;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    border-radius: 4px;
+}
+
+    .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #1e3a8a; /* Cambia el color al azul oscuro */
+    }
+
+/* Barra de título con un azul intermedio */
+.title-banner {
+    background-color: #3b82f6; /* Azul brillante */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+}
+
+/* Contenido principal con marco */
+.container {
+    margin-left: 250px; /* Espacio para el menú lateral */
+    padding: 20px;
+    transition: margin-left 0.3s;
+    font-size: 1rem;
+    max-width: calc(100% - 250px); /* Limitar el ancho máximo para no sobrepasar la barra lateral */
+    padding-top: 60px; /* Espacio debajo de la viñeta */
+    border: 2px solid #1e3a8a; /* Marco azul alrededor del contenido */
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+}
+
+/* Estilos para las tablas con borde */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    table-layout: fixed;
+    border: 1px solid #ddd; /* Borde de la tabla */
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+th {
+    background-color: #1e3a8a; /* Azul para las cabeceras */
+    color: white;
+    border: 1px solid #ddd; /* Borde en las cabeceras */
+}
+
+td {
+    border: 1px solid #ddd; /* Borde en las celdas */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Responsive Design: Para pantallas pequeñas */
+@media (max-width: 768px) {
+    .navbar-header {
+        font-size: 1.5rem;
+        padding: 10px;
+    }
+
+    .navbar {
+        position: relative;
+        top: 0; /* El menú ya no está fijo */
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .navbar-toggle {
+        display: block; /* Mostrar el botón en pantallas pequeñas */
+    }
+
+    .nav-link {
+        font-size: 1rem;
+    }
+
+    .container {
+        margin-left: 0;
+        padding: 10px;
+    }
 }
