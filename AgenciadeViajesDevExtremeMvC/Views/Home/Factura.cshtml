@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Factura";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Factura</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Factura>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("Factura")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.ReservacionId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Reservacion").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("FechaReservacion")
+        );
+
+        columns.AddFor(m => m.FechaPago);
+        columns.AddFor(m => m.MetodoPagoId).Lookup(lookup => lookup
+    .DataSource(ds => ds.WebApi().Controller("MetodoPago").LoadAction("Get").Key("Id"))
+    .ValueExpr("Id")
+    .DisplayExpr("Nombre")
+);
+
+        columns.AddFor(m => m.MontoPagado);
+
+
+
+        columns.AddFor(m => m.Estado);
+    })
+       .Editing(e => e
+       .Mode(GridEditMode.Popup)
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+    .Paging(p => p.PageSize(10))
+.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 5, 10, 20 }))
+.FilterRow(f => f.Visible(true))
+.SearchPanel(s => s.Visible(true).Width(240))
+)

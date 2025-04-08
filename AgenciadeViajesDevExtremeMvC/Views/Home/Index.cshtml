@@ -4,30 +4,52 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Home</h2>
+<style>
+    /* Eliminar el fondo general del body */
+    body {
+        background: none; /* Elimina el fondo general */
+        margin: 0; /* Asegura que no haya márgenes adicionales */
+        padding: 0; /* Elimina el padding por defecto */
+        overflow-x: hidden; /* Evita que se desplace horizontalmente */
+    }
 
-@(Html.DevExtreme().DataGrid<SampleOrder>()
-    .ShowBorders(true)
-    .DataSource(d => d.WebApi().Controller("SampleData").Key("OrderID"))
-    .Columns(columns => {
-        columns.AddFor(m => m.OrderID);
-        columns.AddFor(m => m.OrderDate);
-        columns.AddFor(m => m.CustomerName);
-        columns.AddFor(m => m.ShipCountry);
-        columns.AddFor(m => m.ShipCity);
-    })
-    .Paging(p => p.PageSize(10))
-    .FilterRow(f => f.Visible(true))
-    .HeaderFilter(f => f.Visible(true))
-    .GroupPanel(p => p.Visible(true))
-    .Grouping(g => g.AutoExpandAll(false))
-    .RemoteOperations(true)
-    .Summary(s => s
-        .TotalItems(totalItems => {
-            totalItems.AddFor(m => m.ShipCity).SummaryType(SummaryType.Count);
-        })
-        .GroupItems(groupItems => {
-            groupItems.Add().SummaryType(SummaryType.Count);
-        })
-    )
-)
+    /* Establecer fondo solo en el contenedor home-overlay */
+    .home-overlay {
+        background: url('@Url.Content("~/Content/playa.jpg")') no-repeat center center fixed;
+        background-size: cover; /* Asegura que la imagen cubra toda el área */
+        background-attachment: fixed; /* La imagen no se mueve al hacer scroll */
+        height: 100vh; /* Hace que el contenedor ocupe toda la altura de la pantalla */
+        width: 100vw; /* Asegura que el contenedor ocupe todo el ancho de la pantalla */
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Sombra opcional */
+        color: white; /* Color blanco para el texto */
+        max-width: 100%; /* Asegura que el ancho no esté limitado */
+        margin: 0; /* Elimina cualquier margen extra */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative; /* Para manejar el posicionamiento dentro del contenedor */
+    }
+
+    .home-overlay h1, .home-overlay p {
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Agrega sombra al texto para mayor contraste */
+    }
+</style>
+
+<!-- Contenido sobre la imagen de fondo -->
+<div class="home-overlay">
+    <div>
+        <h1 class="display-4">¡Bienvenido a la Agencia de Viajes!</h1>
+        <p class="lead">
+            Descubre tu paquete ideal, cotiza fácilmente y reserva con confianza.
+        </p>
+
+        <div class="mt-4">
+            <a href="@Url.Action("Paquete", "Home")" class="btn btn-success m-2">Ver Paquetes</a>
+            <a href="@Url.Action("Reserva", "Home")" class="btn btn-info m-2">Ver Reservas</a>
+            <a href="@Url.Action("Cotizacion", "Home")" class="btn btn-warning m-2">Ver Cotizaciones</a>
+        </div>
+    </div>
+</div>

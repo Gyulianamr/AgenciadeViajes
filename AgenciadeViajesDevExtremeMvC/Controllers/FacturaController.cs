@@ -15,39 +15,60 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
 {
     public class FacturaController : ApiController
     {
-        public class CotizacionController : ApiController
-        {
+
             [HttpGet]
-            public async Task<HttpResponseMessage> Get(DataSourceLoadOptions loadOptions)
-            {
-                var apiUrl = "https://localhost:44321/api/Facturas";
-                var respuestaJson = await GetAsync(apiUrl);
+  
+        public async Task<HttpResponseMessage> Get(DataSourceLoadOptions loadOptions)
+        {
+            var apiUrl = "https://localhost:44321/api/Facturas";
+            var respuestaJson = await GetAsync(apiUrl);
 
-                List<Factura> listaFactura = JsonConvert.DeserializeObject<List<Factura>>(respuestaJson);
-                return Request.CreateResponse(DataSourceLoader.Load(listaFactura, loadOptions));
+            if (string.IsNullOrEmpty(respuestaJson))
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NoContent, "No data received from the API");
             }
 
-            public static async Task<string> GetAsync(string uri)
+            List<Factura> listaFactura = JsonConvert.DeserializeObject<List<Factura>>(respuestaJson);
+            if (listaFactura == null || !listaFactura.Any())
             {
-                try
+                return Request.CreateErrorResponse(HttpStatusCode.NoContent, "No invoices found");
+            }
+
+            return Request.CreateResponse(DataSourceLoader.Load(listaFactura, loadOptions));
+        }
+
+
+        public static async Task<string> GetAsync(string uri)
+        {
+            try
+            {
+                var handler = new HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+                using (var client = new HttpClient(handler))
                 {
-                    var handler = new HttpClientHandler();
-                    handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
-                    using (var client = new HttpClient(handler))
+                    var response = await client.GetAsync(uri);
+
+                    // Verifica el código de estado HTTP
+                    if (!response.IsSuccessStatusCode)
                     {
-                        var response = await client.GetAsync(uri);
-                        response.EnsureSuccessStatusCode();
-                        return await response.Content.ReadAsStringAsync();
+                        // Si no es exitoso, registra el error
+                        var errorMessage = await response.Content.ReadAsStringAsync();
+                        return $"Error: {response.StatusCode}, Message: {errorMessage}";
                     }
-                }
-                catch (Exception e)
-                {
-                    var m = e.Message;
-                    return null;
+
+                    return await response.Content.ReadAsStringAsync();
                 }
             }
+            catch (Exception e)
+            {
+                // En caso de una excepción
+                return $"Exception: {e.Message}";
+            }
+        }
 
-            [HttpPost]
+
+
+        [HttpPost]
             public async Task<HttpResponseMessage> Post(FormDataCollection form)
             {
                 var values = form.Get("values");
@@ -115,6 +136,8 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
 
 
 
-        }
+
+        
     }
 }
+

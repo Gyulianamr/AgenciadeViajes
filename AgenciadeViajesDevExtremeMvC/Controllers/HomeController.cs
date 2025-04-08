@@ -36,8 +36,12 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers {
         public ActionResult Cotizacion()
         {
             return View();
-
-
         }
+        public ActionResult Factura()
+        {
+            
+            return View();
+        }
+
     }
 }
