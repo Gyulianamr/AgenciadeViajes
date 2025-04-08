@@ -174,46 +174,97 @@ namespace AgenciadeViajesApi.Controllers
         /// <param name="id"></param>
         /// <param name="paquete"></param>
         /// <returns></returns>
+
         [ResponseType(typeof(void))]
         public IHttpActionResult Put(int id, Paquete_Turistico paquete)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != paquete.Id)
-            {
-                return BadRequest("El ID no coincide.");
-            }
-
-            // Calcular el costo total antes de guardar
-            paquete.PrecioTotal = paquete.CalcularCostoTotal();
-
-            db.Entry(paquete).State = EntityState.Modified;
-
             try
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PaqueteExists(id))
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                if (id != paquete.Id)
+                {
+                    return BadRequest("ID no coincide.");
+                }
+
+                var paqueteExistente = db.PaqueteTuristicos
+                    .Include(p => p.Vuelo)
+                    .Include(p => p.Hotel)
+                    .Include(p => p.Seguro)
+                    .Include(p => p.GuiaTuristico)
+                    .Include(p => p.Actividades)
+                    .FirstOrDefault(p => p.Id == id);
+
+                if (paqueteExistente == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                // Actualizar propiedades escalares
+                paqueteExistente.Nombre = paquete.Nombre;
+                paqueteExistente.Duracion_Dias = paquete.Duracion_Dias;
+                paqueteExistente.FechaExpiracion = paquete.FechaExpiracion;
+                paqueteExistente.Estado = paquete.Estado;
+
+                // Actualizar IDs y relaciones
+                paqueteExistente.VueloId = paquete.VueloId;
+                paqueteExistente.HotelId = paquete.HotelId;
+                paqueteExistente.SeguroId = paquete.SeguroId;
+                paqueteExistente.GuiaTuristicoId = paquete.GuiaTuristicoId;
+                paqueteExistente.ActividadesId = paquete.ActividadesId;
+
+                // Cargar entidades relacionadas desde la base de datos usando los nuevos IDs
+                paqueteExistente.Vuelo = paqueteExistente.VueloId.HasValue
+                    ? db.Vuelos.Find(paqueteExistente.VueloId.Value)
+                    : null;
+
+                paqueteExistente.Hotel = paqueteExistente.HotelId.HasValue
+                    ? db.Hotel.Find(paqueteExistente.HotelId.Value)
+                    : null;
+
+                paqueteExistente.Seguro = paqueteExistente.SeguroId.HasValue
+                    ? db.Seguros.Find(paqueteExistente.SeguroId.Value)
+                    : null;
+
+                paqueteExistente.GuiaTuristico = paqueteExistente.GuiaTuristicoId.HasValue
+                    ? db.GuiaTuristicos.Find(paqueteExistente.GuiaTuristicoId.Value)
+                    : null;
+
+                paqueteExistente.Actividades = paqueteExistente.ActividadesId.HasValue
+                    ? db.Actividades.Find(paqueteExistente.ActividadesId.Value)
+                    : null;
+
+                // Calcular el precio total
+                double total = 0;
+
+                if (paqueteExistente.Vuelo != null)
+                    total += paqueteExistente.Vuelo.Precio;
+
+                if (paqueteExistente.Hotel != null && paqueteExistente.Hotel.Tipohabitacion != null)
+                    total += paqueteExistente.Hotel.Tipohabitacion.PrecioPorNoche * paqueteExistente.Duracion_Dias;
+
+                if (paqueteExistente.Seguro != null)
+                    total += paqueteExistente.Seguro.Precio;
+
+                if (paqueteExistente.GuiaTuristico != null)
+                    total += paqueteExistente.GuiaTuristico.Salario;
+
+                if (paqueteExistente.Actividades != null)
+                    total += paqueteExistente.Actividades.PrecioHora;
+
+                paqueteExistente.PrecioTotal = total;
+
+                db.Entry(paqueteExistente).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Ok(paqueteExistente);
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        private bool PaqueteExists(int id)
-        {
-            return db.PaqueteTuristicos.Any(p => p.Id == id);
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
         }
 
 

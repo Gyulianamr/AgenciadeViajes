@@ -118,6 +118,11 @@ namespace AgenciadeViajesApi.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 if (id != reservacion.Id)
                 {
                     return BadRequest("ID no coincide.");
@@ -129,7 +134,15 @@ namespace AgenciadeViajesApi.Controllers
                     return NotFound();
                 }
 
+                var cotizacion = db.Cotizaciones.Find(reservacion.IdCotizacion);
+                if (cotizacion == null)
+                {
+                    return BadRequest("Cotización no encontrada.");
+                }
+
                 // Actualizar los campos de la reservación
+                existente.IdCotizacion = reservacion.IdCotizacion; // clave foránea
+                existente.Cotizacion = cotizacion; // relación
                 existente.FechaReservacion = reservacion.FechaReservacion;
                 existente.Estado = reservacion.Estado;
                 existente.FechaViaje = reservacion.FechaViaje;
@@ -137,7 +150,7 @@ namespace AgenciadeViajesApi.Controllers
                 existente.MontoPagado = reservacion.MontoPagado;
 
                 // Calcular el nuevo saldo pendiente
-                existente.CalcularSaldoPendiente();
+                existente.Saldopendiente = cotizacion.CostoTotal - reservacion.MontoPagado;
 
                 db.Entry(existente).State = EntityState.Modified;
                 db.SaveChanges();
@@ -149,6 +162,7 @@ namespace AgenciadeViajesApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         /// <summary>
         /// Elimina una reservación por su ID.

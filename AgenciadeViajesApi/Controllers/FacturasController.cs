@@ -25,10 +25,10 @@ namespace AgenciadeViajesApi.Controllers
                          select new
                          {
                              Id = factura.Id,
-                             ReservacionId = reservacion.IdCotizacion,
+                             ReservacionId = reservacion.Id,
                              FechaPago = factura.FechaPago,
                              MontoPagado = factura.MontoPagado,
-                             MetodoPago = metodoPago.Nombre, // Asumí que hay un campo 'Nombre' en MetodoPago, cámbialo si es necesario
+                             MetodoPagoId = metodoPago.Id, 
                              Estado = factura.Estado
                          };
 
@@ -119,32 +119,54 @@ namespace AgenciadeViajesApi.Controllers
         {
             try
             {
-                if (id != factura.Id)
+                if (!ModelState.IsValid)
                 {
-                    return BadRequest("ID no coincide.");
+                    return BadRequest(ModelState);
                 }
 
-                var existente = db.Factura.Find(id);
-                if (existente == null)
+                var facturaExistente = db.Factura.Find(id);
+                if (facturaExistente == null)
                 {
-                    return NotFound();
+                    return NotFound(); // No se encontró la factura a actualizar
+                }
+
+                // Verificar si la reservación existe
+                var reservacion = db.Reservas.Find(factura.ReservacionId);
+                if (reservacion == null)
+                {
+                    return BadRequest("Reservación no encontrada.");
+                }
+
+                // Verificar si el método de pago existe
+                var metodoPago = db.MetododePagos.Find(factura.MetodoPagoId);
+                if (metodoPago == null)
+                {
+                    return BadRequest("Método de pago no encontrado.");
                 }
 
                 // Actualizar los campos de la factura
-                existente.FechaPago = factura.FechaPago;
-                existente.MontoPagado = factura.MontoPagado;
-                existente.Estado = factura.Estado;
+                facturaExistente.ReservacionId = factura.ReservacionId;
+                facturaExistente.MetodoPagoId = factura.MetodoPagoId;
+                facturaExistente.FechaPago = factura.FechaPago;
+                facturaExistente.MontoPagado = factura.MontoPagado;
 
-                db.Entry(existente).State = EntityState.Modified;
+
+                // Asignar relaciones
+                facturaExistente.Reservacion = reservacion;
+                facturaExistente.MetodoPago = metodoPago;
+
+                db.Entry(facturaExistente).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return Ok(existente);
+                return Ok(facturaExistente);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+
 
         /// <summary>
         /// Elimina una factura por su ID.

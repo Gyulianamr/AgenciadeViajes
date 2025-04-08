@@ -41,10 +41,20 @@ namespace AgenciadeViajesApi.Models
 
         public double Costo()
         {
-            Console.WriteLine($"Paquete PrecioTotal: {Paquete.PrecioTotal}");
-            Console.WriteLine($"Cantidad Personas: {CantidadPersonas}");
 
-            double total = Paquete.PrecioTotal * CantidadPersonas;
+            double total;
+            try
+            {
+                 total = Paquete.PrecioTotal * CantidadPersonas;
+                return total;
+            }
+            catch (Exception ex)
+            {
+                total = 0;
+
+
+               
+            }
             return total;
         }
 

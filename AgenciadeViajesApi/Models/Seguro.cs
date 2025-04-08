@@ -86,8 +86,7 @@ namespace AgenciadeViajesApi.Models
             get { return _duracionDias; }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("La duración debe ser mayor que 0");
+               
                 _duracionDias = value;
             }
         }
