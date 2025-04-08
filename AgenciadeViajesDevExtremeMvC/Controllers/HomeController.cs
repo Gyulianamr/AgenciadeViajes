@@ -43,5 +43,16 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers {
             return View();
         }
 
+        public ActionResult AgentedeViaje()
+        {
+
+            return View();
+        }
+
+        public ActionResult GuiaTuristico()
+        {
+
+            return View();
+        }
     }
 }

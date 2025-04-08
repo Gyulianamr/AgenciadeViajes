@@ -105,39 +105,54 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             }
 
             [HttpPut]
-            public async Task<HttpResponseMessage> Put(FormDataCollection form)
+    
+        public async Task<HttpResponseMessage> Put(FormDataCollection form)
+        {
+            var key = Convert.ToInt32(form.Get("key"));
+            var values = form.Get("values");
+
+            var apiUrl = "https://localhost:44321/api/Facturas/" + key;
+            var respuestaJson = await GetAsync(apiUrl);
+            Factura factura = JsonConvert.DeserializeObject<Factura>(respuestaJson);
+            JsonConvert.PopulateObject(values, factura);
+
+
+            var apiUrl1 = "https://localhost:44321/api/Reservaciones/" + factura.ReservacionId;
+            var respuestaJson1 = await GetAsync(apiUrl);
+            Reservacion reserva = JsonConvert.DeserializeObject<Reservacion>(respuestaJson1);
+
+            factura.Reservacion = reserva;
+
+            var apiUrlM = "https://localhost:44321/api/Metodo_Pago/" + factura.MetodoPagoId;
+            var respuestaJsonM = await GetAsync(apiUrl);
+            Metodo_Pago metodo = JsonConvert.DeserializeObject<Metodo_Pago>(respuestaJsonM);
+
+            factura.MetodoPago = metodo;
+
+
+            string jsonString = JsonConvert.SerializeObject(factura);
+            var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
+
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+
+            using (var client = new HttpClient(handler))
             {
-                var key = Convert.ToInt32(form.Get("key"));
-                var values = form.Get("values");
-
-                var apiUrl = "https://localhost:44321/api/Facturas/" + key;
-                var respuestaJson = await GetAsync(apiUrl);
-                Cotizacion cotizacion = JsonConvert.DeserializeObject<Cotizacion>(respuestaJson);
-
-                JsonConvert.PopulateObject(values, cotizacion);
-                cotizacion.ActualizarCostoTotal(); // Asegurarse de actualizar el costo total
-
-                string jsonString = JsonConvert.SerializeObject(cotizacion);
-                var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
-
-                var handler = new HttpClientHandler();
-                handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
-
-                using (var client = new HttpClient(handler))
-                {
-                    var url = "https://localhost:44321/api/Facturas/" + key;
-                    var response = await client.PutAsync(url, httpContent);
-                    var result = await response.Content.ReadAsStringAsync();
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK);
+                var url = "https://localhost:44321/api/Facturas/" + key;
+                var response = await client.PutAsync(url, httpContent);
+                var result = await response.Content.ReadAsStringAsync();
             }
 
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
 
 
 
 
-        
+
+
+
+
     }
 }
 

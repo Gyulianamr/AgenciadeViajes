@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Factura</h2>
+<h2>Facturas de Pagos</h2>
 
 @(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Factura>()
     .DataSource(ds => ds.WebApi()
@@ -49,3 +49,4 @@
 .FilterRow(f => f.Visible(true))
 .SearchPanel(s => s.Visible(true).Width(240))
 )
+

@@ -7,8 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="~/Content/Site.css" rel="stylesheet" />
+
     <title>Transacciones de Agencia de Viajes</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    @* Uncomment to use the HtmlEditor control *@
+    @* <script src="https://unpkg.com/devextreme-quill@24_1/dist/dx-quill.min.js"></script> *@
 
     @Styles.Render("~/Content/bundle")
     @Styles.Render("~/Content/DevExtremeBundle")
@@ -17,23 +21,19 @@
 </head>
 
 <body style="padding-top: 3.5rem;">
-    <!-- Viñeta con el nombre de la Agencia -->
     <div class="navbar-header">
         Agencia de Viajes
     </div>
-
-    <!-- Menú lateral fijo a la izquierda -->
+    <!-- Barra lateral fija a la izquierda -->
     <nav class="navbar fixed-left">
-        <!-- Botón para ocultar/mostrar menú -->
-        <button class="navbar-toggle">☰</button>
-
         <ul class="navbar-nav">
-            <a href="@Url.Action("Index", "Home")" class="nav-link active">Inicio</a>
+            <li class="nav-item"><a href="@Url.Action("Index", "Home")" class="nav-link">Inicio</a></li>
             <li class="nav-item"><a href="@Url.Action("Cliente", "Home")" class="nav-link">Clientes</a></li>
             <li class="nav-item"><a href="@Url.Action("Paquete", "Home")" class="nav-link">Paquetes Turisticos</a></li>
             <li class="nav-item"><a href="@Url.Action("Reserva", "Home")" class="nav-link">Reservas</a></li>
-            <li class="nav-item"><a href="@Url.Action("Cotizacion", "Home")" class="nav-link">Cotización</a></li>
+            <li class="nav-item"><a href="@Url.Action("Cotizacion", "Home")" class="nav-link">Cotizacion</a></li>
             <li class="nav-item"><a href="@Url.Action("Factura", "Home")" class="nav-link">Factura</a></li>
+            <li class="nav-item"><a href="@Url.Action("Empleado", "Home")" class="nav-link">Factura</a></li>
         </ul>
     </nav>
 
@@ -44,19 +44,5 @@
         </div>
     </div>
 
-    <script>
-        const toggleButton = document.querySelector('.navbar-toggle');
-        const navbar = document.querySelector('.navbar');
-
-        // Funcionalidad para mostrar/ocultar el menú
-        toggleButton.addEventListener('click', () => {
-            if (navbar.style.transform === 'translateX(-250px)') {
-                navbar.style.transform = 'translateX(0)';
-            } else {
-                navbar.style.transform = 'translateX(-250px)';
-            }
-        });
-    </script>
 </body>
 </html>
-

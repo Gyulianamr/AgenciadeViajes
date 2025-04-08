@@ -38,6 +38,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
         // Constructor con parámetros
 
 
+       // public double Costo { get; set; }
 
         public double Costo()
         {

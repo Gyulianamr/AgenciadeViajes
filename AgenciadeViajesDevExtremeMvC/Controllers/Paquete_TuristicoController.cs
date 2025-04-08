@@ -2,12 +2,14 @@
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -71,44 +73,111 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
         }
 
         [HttpPut]
+
+
         public async Task<HttpResponseMessage> Put(FormDataCollection form)
         {
-            var key = Convert.ToInt32(form.Get("key"));
-            var values = form.Get("values");
-
-            var apiUrlGetPeli = "https://localhost:44321/api/PaquetesTuristicos/" + key;
-            var respuestaPelic = await GetAsync(apiUrlGetPeli);
-
-            if (respuestaPelic == null)
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Cliente no encontrado");
-
-            Paquete_Turistico paquete = JsonConvert.DeserializeObject<Paquete_Turistico>(respuestaPelic);
-            JsonConvert.PopulateObject(values, paquete);
-
-            string jsonString = JsonConvert.SerializeObject(paquete);
-            System.Diagnostics.Debug.WriteLine(jsonString);
-
-            var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
-
-            var handler = new HttpClientHandler
+            try
             {
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-            };
-
-            using (var client = new HttpClient(handler))
-            {
-                var url = "https://localhost:44321/api/PaquetesTuristicos/" + key;
-                var response = await client.PutAsync(url, httpContent);
-
-                if (!response.IsSuccessStatusCode)
+                // Validar y obtener los datos del formulario
+                if (form == null || string.IsNullOrEmpty(form.Get("key")) || string.IsNullOrEmpty(form.Get("values")))
                 {
-                    var error = await response.Content.ReadAsStringAsync();
-                    return Request.CreateErrorResponse(response.StatusCode, error);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Los datos del formulario son inválidos.");
                 }
+
+                var key = Convert.ToInt32(form.Get("key"));
+                var values = form.Get("values");
+
+                // Obtener el paquete turístico existente
+                var apiUrl = $"https://localhost:44321/api/PaquetesTuristicos/{key}";
+                var respuestaJson = await GetAsync(apiUrl);
+                if (string.IsNullOrEmpty(respuestaJson))
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Paquete turístico no encontrado.");
+                }
+
+                // Deserializar el JSON como una lista de Paquete_Turistico
+                List<Paquete_Turistico> paquetes;
+                try
+                {
+                    paquetes = JsonConvert.DeserializeObject<List<Paquete_Turistico>>(respuestaJson);
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, $"Error al deserializar el JSON: {ex.Message}");
+                }
+
+                // Verificar si se encontró al menos un paquete
+                if (paquetes == null || paquetes.Count == 0)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No se encontraron paquetes turísticos en la respuesta.");
+                }
+
+                // Tomar el primer paquete del arreglo
+                var paquete = paquetes[0];
+
+                // Actualizar el paquete turístico con los nuevos valores
+                JsonConvert.PopulateObject(values, paquete);
+
+                // Obtener datos relacionados (Destino, Hotel, Actividades, etc.)
+                var tasks = new List<Task>
+        {
+            PopulateRelatedEntity<Destino>(paquete.DestinoId, "Destino", destino => paquete.Destino = destino),
+            PopulateRelatedEntity<Hotel>(paquete.HotelId ?? 0, "Hotel", hotel => paquete.Hotel = hotel),
+            PopulateRelatedEntity<Actividades>(paquete.ActividadesId ?? 0, "Actividades", actividades => paquete.Actividades = actividades),
+            PopulateRelatedEntity<Vuelo>(paquete.VueloId ?? 0, "Vuelo", vuelo => paquete.Vuelo = vuelo),
+            PopulateRelatedEntity<GuiaTuristico>(paquete.GuiaTuristicoId ?? 0, "GuiaTuristico", guia => paquete.GuiaTuristico = guia),
+            PopulateRelatedEntity<Seguro>(paquete.SeguroId ?? 0, "Seguro", seguro => paquete.Seguro = seguro)
+        };
+
+                await Task.WhenAll(tasks);
+
+                // Serializar el paquete actualizado
+                var jsonString = JsonConvert.SerializeObject(paquete);
+                var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
+
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                };
+
+                using (var client = new HttpClient(handler))
+                {
+                    var url = $"https://localhost:44321/api/PaquetesTuristicos/{key}";
+                    var response = await client.PutAsync(url, httpContent);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        return Request.CreateErrorResponse((HttpStatusCode)response.StatusCode, errorContent);
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Paquete turístico actualizado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        private async Task PopulateRelatedEntity<T>(int? id, string entityName, Action<T> assignAction)
+        {
+            if (!id.HasValue)
+            {
+                throw new ArgumentNullException(nameof(id), $"El ID de {entityName} no puede ser nulo.");
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+            var apiUrl = $"https://localhost:44321/api/{entityName}/{id.Value}";
+            var respuestaJson = await GetAsync(apiUrl);
+            if (!string.IsNullOrEmpty(respuestaJson))
+            {
+                var entity = JsonConvert.DeserializeObject<T>(respuestaJson);
+                assignAction(entity);
+            }
         }
+
+
 
         [HttpDelete]
         public async Task<HttpResponseMessage> Delete(FormDataCollection form)

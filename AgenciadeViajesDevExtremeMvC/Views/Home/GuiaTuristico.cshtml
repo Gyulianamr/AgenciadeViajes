@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "GuiaTuristico";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GuiaTuristico</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.GuiaTuristico>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("GuiaTuristico")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.ZonaEspecializada);
+
+        columns.AddFor(m => m.Idiomas);
+
+        columns.AddFor(m => m.SalarioPorHora);
+
+        columns.AddFor(m => m.FechaContratacion);
+
+        columns.AddFor(m => m.HoraLlegada);
+
+        columns.AddFor(m => m.HoraSalida);
+
+        columns.AddFor(m => m.Salario);
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.Nombre);
+
+        columns.AddFor(m => m.Apellido);
+
+        columns.AddFor(m => m.Telefono);
+
+        columns.AddFor(m => m.Correo);
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+)
