@@ -56,10 +56,7 @@ namespace AgenciadeViajesApi.Models
             get { return _tipo; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El tipo no puede estar vacío");
-                if (value.Length < 3 || value.Length > 50)
-                    throw new ArgumentException("El tipo debe tener entre 3 y 50 caracteres");
+        
                 _tipo = value;
             }
         }
@@ -69,8 +66,7 @@ namespace AgenciadeViajesApi.Models
             get { return _compañia; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("La compañía no puede estar vacía");
+               
                 _compañia = value;
             }
         }
@@ -81,8 +77,7 @@ namespace AgenciadeViajesApi.Models
             get { return _origen; }
             set
             {
-                if (value == null)
-                    throw new ArgumentException("El origen no puede ser nulo");
+                
                 _origen = value;
             }
         }
@@ -93,8 +88,6 @@ namespace AgenciadeViajesApi.Models
             get { return _destino; }
             set
             {
-                if (value == null)
-                    throw new ArgumentException("El destino no puede ser nulo");
                 _destino = value;
             }
         }
@@ -127,8 +120,7 @@ namespace AgenciadeViajesApi.Models
             get { return _capacidad; }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("La capacidad debe ser mayor a 0");
+                
                 _capacidad = value;
             }
         }
@@ -139,8 +131,7 @@ namespace AgenciadeViajesApi.Models
             get { return _precio; }
             set
             {
-                if (value < 0)
-                    throw new ArgumentException("El precio no puede ser negativo");
+                
                 _precio = value;
             }
         }

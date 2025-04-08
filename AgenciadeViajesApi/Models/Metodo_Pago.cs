@@ -38,12 +38,7 @@ namespace AgenciadeViajesApi.Models
             get { return _nombre; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El nombre es requerido");
-
-                if (value.Length < 3 || value.Length > 50)
-                    throw new ArgumentException("Nombre debe tener 3-50 caracteres");
-
+                
                 _nombre = value;
             }
         }
@@ -53,8 +48,6 @@ namespace AgenciadeViajesApi.Models
             get { return _descripcion; }
             set
             {
-                if (value?.Length > 200)
-                    throw new ArgumentException("Descripción no puede exceder 200 caracteres");
                 _descripcion = value;
             }
         }

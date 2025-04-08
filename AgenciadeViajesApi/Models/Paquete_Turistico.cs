@@ -82,10 +82,6 @@ namespace AgenciadeViajesApi.Models
             get { return _nombre; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El nombre no puede estar vacío");
-                if (value.Length < 3 || value.Length > 100)
-                    throw new ArgumentException("El nombre debe tener entre 3 y 100 caracteres");
                 _nombre = value;
             }
         }
@@ -109,8 +105,7 @@ namespace AgenciadeViajesApi.Models
             get { return _fechaExpiracion; }
             set
             {
-                if (value <= DateTime.Now)
-                    throw new ArgumentException("La fecha de expiración debe ser futura");
+                
                 _fechaExpiracion = value;
             }
         }

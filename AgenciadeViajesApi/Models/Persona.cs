@@ -78,11 +78,7 @@ namespace AgenciadeViajesApi.Models
             get { return _correo; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El correo electrónico no puede estar vacío");
-
-                if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                    throw new ArgumentException("Formato de correo electrónico no válido");
+               
 
                 _correo = value;
             }

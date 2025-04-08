@@ -34,8 +34,7 @@ namespace AgenciadeViajesApi.Models
             get { return _fechacontratacion; }
             set
             {
-                if (value > DateTime.Now)
-                    throw new ArgumentException("La fecha de contratación no puede ser futura");
+                
                 _fechacontratacion = value;
             }
         }

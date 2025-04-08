@@ -38,8 +38,7 @@ namespace AgenciadeViajesApi.Models
             get { return _nombre; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El nombre no puede estar vacío.");
+                
                 _nombre = value;
             }
         }
@@ -55,8 +54,7 @@ namespace AgenciadeViajesApi.Models
             get { return _duracionHoras; }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("La duración debe ser mayor o igual a 1.");
+                
                 _duracionHoras = value;
             }
         }
@@ -72,8 +70,7 @@ namespace AgenciadeViajesApi.Models
             get { return _precioHora; }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("El precio por hora debe ser mayor que 0.");
+               
                 _precioHora = value;
             }
         }

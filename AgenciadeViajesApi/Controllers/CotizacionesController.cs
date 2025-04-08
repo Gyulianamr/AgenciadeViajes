@@ -168,7 +168,7 @@ namespace AgenciadeViajesApi.Controllers
             cotizacionExistente.PaqueteId = cotizacion.PaqueteId;
             cotizacionExistente.CantidadPersonas = cotizacion.CantidadPersonas;
             cotizacionExistente.FechaCotizacion = DateTime.Now;
-            cotizacionExistente.CostoTotal = cotizacion.Costo();
+            cotizacionExistente.CostoTotal = cotizacionExistente.Paquete.PrecioTotal*cotizacionExistente.CantidadPersonas;
 
             db.SaveChanges();
 
