@@ -1,81 +1,102 @@
-@using AgenciadeViajesDevExtremeMvC.Models
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Inicio";
 }
 
 <style>
-    /* Eliminar el fondo general del body */
+    /* ============================
+       ESTILOS GENERALES
+       ============================ */
+
+    /* Eliminar márgenes y paddings globales */
     body {
-        background: none; /* Elimina el fondo general */
-        margin: 0; /* Asegura que no haya márgenes adicionales */
-        padding: 0; /* Elimina el padding por defecto */
-        overflow-x: hidden; /* Evita que se desplace horizontalmente */
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9; /* Fondo claro para el resto de la página */
+        overflow-x: hidden; /* Evitar desplazamiento horizontal */
     }
 
-    /* Establecer fondo solo en el contenedor home-overlay */
+    /* Contenedor principal con la imagen de fondo */
     .home-overlay {
-        background: url('@Url.Content("~/Content/playa.jpg")') no-repeat center center fixed;
-        background-size: cover; /* Asegura que la imagen cubra toda el área */
-        background-attachment: fixed; /* La imagen no se mueve al hacer scroll */
-        height: 100vh; /* Hace que el contenedor ocupe toda la altura de la pantalla */
-        width: 100vw; /* Asegura que el contenedor ocupe todo el ancho de la pantalla */
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Sombra opcional */
-        color: white; /* Color blanco para el texto */
-        max-width: 100%; /* Asegura que el ancho no esté limitado */
-        margin: 0; /* Elimina cualquier margen extra */
+        background: url('@Url.Content("~/Content/playa1.jpg")') no-repeat center center;
+        background-size: cover; /* Cubre un área específica del fondo */
+        background-position: center center; /* Centra la imagen */
+        height: 400px; /* Altura fija para evitar que ocupe toda la pantalla */
+        width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: center; /* Centra el contenido horizontalmente */
+        align-items: center; /* Centra el contenido verticalmente */
         text-align: center;
-        position: relative; /* Para manejar el posicionamiento dentro del contenedor */
+        position: relative;
+        box-sizing: border-box;
+        overflow: hidden; /* Evita desbordamientos */
     }
 
-    /* Modificar los estilos del título y los textos dentro del contenedor */
+    /* Estilo para el título */
     .home-overlay h1 {
-        color: white; /* El título será blanco */
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra sutil para mejorar la legibilidad */
+        font-size: clamp(2rem, 5vw, 3rem); /* Tamaño responsivo basado en el ancho de la pantalla */
+        color: white;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para legibilidad */
+        margin-bottom: 1rem; /* Espacio debajo del título */
     }
 
+    /* Estilo para el párrafo */
     .home-overlay p {
-        color: white; /* Asegura que el texto del párrafo sea blanco */
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra sutil para mejorar la legibilidad */
+        font-size: clamp(1rem, 3vw, 1.5rem); /* Tamaño responsivo basado en el ancho de la pantalla */
+        color: white;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        margin-bottom: 2rem; /* Espacio debajo del párrafo */
     }
 
+    /* Estilo de los botones */
     .home-overlay .btn {
         font-weight: bold;
+        font-size: clamp(0.9rem, 2vw, 1.2rem); /* Tamaño responsivo basado en el ancho de la pantalla */
+        padding: 10px 20px;
+        border-radius: 25px;
+        transition: transform 0.3s ease, background-color 0.3s ease; /* Animación de los botones */
+        text-decoration: none;
+        color: white;
     }
 
-    .home-overlay .btn-success {
-        background-color: #4caf50; /* Verde */
+    /* Botones personalizados con tonos de verde */
+        .home-overlay .btn-success {
+            background-color: #388e3c; /* Verde claro */
+            border: none;
+        }
+
+    .home-overlay .btn-success-dark {
+        background-color: #388e3c; /* Verde más oscuro */
         border: none;
     }
 
-    .home-overlay .btn-info {
-        background-color: #2196f3; /* Azul */
-        border: none;
-    }
+        .home-overlay .btn-success-light {
+            background-color: #388e3c; /* Verde más suave */
+            border: none;
+        }
 
-    .home-overlay .btn-warning {
-        background-color: #ff9800; /* Naranja */
-        border: none;
+    /* Efecto al pasar el mouse por los botones */
+    .home-overlay .btn:hover {
+        transform: scale(1.05); /* Efecto de aumento */
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra cuando se pasa el mouse */
+        background-color: #87CEEB; /* Azul cielo cuando el mouse pasa por encima */
     }
 </style>
 
 <!-- Contenido sobre la imagen de fondo -->
 <div class="home-overlay">
     <div>
-        <h1 class="display-4">¡Bienvenido a la Agencia de Viajes!</h1>
+        <h1 class="display-4">¡Bienvenido!</h1>
         <p class="lead">
-            gestiona tus opciones con facilidad
+            Maneja las Gestiones con Facilidad
         </p>
 
         <div class="mt-4">
-            <a href="@Url.Action("Paquete", "Home")" class="btn btn-success m-2">Ver Paquetes</a>
-            <a href="@Url.Action("Reserva", "Home")" class="btn btn-info m-2">Ver Reservas</a>
-            <a href="@Url.Action("Cotizacion", "Home")" class="btn btn-warning m-2">Ver Cotizaciones</a>
+            <a href="@Url.Action("Paquete", "Home")" class="btn btn-success m-2">Paquetes</a>
+            <a href="@Url.Action("Reserva", "Home")" class="btn btn-success-dark m-2">Reservas</a>
+            <a href="@Url.Action("Cotizacion", "Home")" class="btn btn-success-light m-2">Cotizaciones</a>
+            <a href="@Url.Action("Cliente", "Home")" class="btn btn-success-dark m-2">Clientes</a>
+            <a href="@Url.Action("Factura", "Home")" class="btn btn-success-light m-2">Facturas</a>
         </div>
     </div>
 </div>

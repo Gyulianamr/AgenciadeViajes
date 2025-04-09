@@ -81,10 +81,10 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             if (respuestaPelic == null)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Cliente no encontrado");
 
-            Cliente cliente = JsonConvert.DeserializeObject<Cliente>(respuestaPelic);
-            JsonConvert.PopulateObject(values, cliente);
+            GuiaTuristico guia = JsonConvert.DeserializeObject<GuiaTuristico>(respuestaPelic);
+            JsonConvert.PopulateObject(values, guia);
 
-            string jsonString = JsonConvert.SerializeObject(cliente);
+            string jsonString = JsonConvert.SerializeObject(guia);
             System.Diagnostics.Debug.WriteLine(jsonString);
 
             var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");

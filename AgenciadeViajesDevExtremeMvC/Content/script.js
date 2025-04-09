@@ -1,41 +1,31 @@
-// Cambio de tema
-const toggleSwitch = document.getElementById('theme-toggle');
+const modeSwitch = document.getElementById('modeSwitch');
 const themeText = document.getElementById('theme-text');
 
-if (localStorage.getItem('theme') === 'dark') {
+// Verificar si hay un modo guardado en localStorage
+const savedMode = localStorage.getItem('mode');
+
+// Aplicar el modo guardado si existe
+if (savedMode === 'dark') {
     document.body.classList.add('dark-mode');
-    toggleSwitch.checked = true;
-    themeText.textContent = 'Modo Oscuro';
+    modeSwitch.checked = true;
+    themeText.textContent = "Modo Oscuro";
 } else {
     document.body.classList.add('light-mode');
-    themeText.textContent = 'Modo Claro';
+    modeSwitch.checked = false;
+    themeText.textContent = "Modo Claro";
 }
 
-toggleSwitch.addEventListener('change', function () {
-    if (this.checked) {
-        document.body.classList.replace('light-mode', 'dark-mode');
-        themeText.textContent = 'Modo Oscuro';
-        localStorage.setItem('theme', 'dark');
+// Escuchar el cambio en el interruptor
+modeSwitch.addEventListener('change', () => {
+    if (modeSwitch.checked) {
+        document.body.classList.add('dark-mode');
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('mode', 'dark');
+        themeText.textContent = "Modo Oscuro";
     } else {
-        document.body.classList.replace('dark-mode', 'light-mode');
-        themeText.textContent = 'Modo Claro';
-        localStorage.setItem('theme', 'light');
+        document.body.classList.add('light-mode');
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('mode', 'light');
+        themeText.textContent = "Modo Claro";
     }
-});
-// Menú plegable
-const menuToggle = document.getElementById('menu-toggle');
-const sidebar = document.getElementById('sidebar');
-const mainContent = document.querySelector('.main-content');
-
-let isMenuOpen = true;
-
-menuToggle.addEventListener('click', function () {
-    if (isMenuOpen) {
-        sidebar.classList.add('collapsed');
-        mainContent.classList.add('shifted');
-    } else {
-        sidebar.classList.remove('collapsed');
-        mainContent.classList.remove('shifted');
-    }
-    isMenuOpen = !isMenuOpen;
 });

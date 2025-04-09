@@ -1,44 +1,155 @@
-/* Estilos generales */
-body {
-    font-family: Arial, sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-    margin: 0;
-    padding: 0;
-}
-
-h1, p {
-    text-align: center;
-}
-
-/* Modo Claro */
-body.light-mode {
-    background-color: white;
-    color: black;
-}
-
-/* Modo Oscuro */
-body.dark-mode {
-    background-color: #333;
-    color: white;
-}
-
-}
-
-/* Estilo para el interruptor */
-.theme-switcher {
+/* Estilo para el banner superior */
+.banner {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to right, #2196F3, #00BCD4); /* Gradiente azul */
+    color: white;
     display: flex;
     align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+    .banner h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .banner p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+/* Barra lateral fija a la izquierda */
+.navbar.fixed-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #2c3e50; /* Azul oscuro */
+    padding-top: 20px;
+    z-index: 1000;
+    transition: all 0.3s ease; /* Animación suave */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra lateral */
+}
+
+/* Estilo para los elementos del menú */
+.navbar-nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    margin: 15px 0;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+    .nav-link:hover {
+        background-color: #34495e; /* Azul más claro al pasar el ratón */
+    }
+
+.menu-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    filter: brightness(0) invert(1); /* Ajusta el color del ícono según el fondo */
+}
+
+/* Contenedor principal */
+.container {
+    margin-top: 60px;
+    margin-left: 250px;
+    padding: 20px;
+    background-color: #f8f9fa; /* Fondo claro */
+    min-height: calc(100vh - 60px); /* Asegura que ocupe toda la altura restante */
+    transition: margin-left 0.3s;
+}
+
+/* Estilo para las tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+    table th,
+    table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #dee2e6;
+    }
+
+    table th {
+        background-color: #e9ecef; /* Fondo gris claro para encabezados */
+        font-weight: bold;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f8f9fa; /* Alternar filas */
+    }
+
+    table tr:hover {
+        background-color: #e9ecef; /* Resaltar al pasar el ratón */
+    }
+
+/* Botones Edit y Delete */
+button {
+    padding: 5px 10px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    button.edit-btn {
+        background-color: #28a745; /* Verde claro */
+        color: white;
+    }
+
+    button.delete-btn {
+        background-color: #dc3545; /* Rojo claro */
+        color: white;
+    }
+
+    button.edit-btn:hover {
+        background-color: #218838; /* Verde más oscuro */
+    }
+
+    button.delete-btn:hover {
+        background-color: #c82333; /* Rojo más oscuro */
+    }
+
+/* Estilo para el interruptor de tema */
+.theme-switcher {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 34px;
+    height: 20px;
 }
 
     .switch input {
@@ -56,15 +167,15 @@ body.dark-mode {
     bottom: 0;
     background-color: #ccc;
     transition: 0.4s;
-    border-radius: 34px;
+    border-radius: 50px;
 }
 
     .slider:before {
         position: absolute;
         content: "";
-        height: 26px;
-        width: 26px;
-        border-radius: 50%;
+        height: 12px;
+        width: 12px;
+        border-radius: 50px;
         left: 4px;
         bottom: 4px;
         background-color: white;
@@ -72,22 +183,32 @@ body.dark-mode {
     }
 
 input:checked + .slider {
-    background-color: #0277bd;
+    background-color: #2196F3;
 }
 
     input:checked + .slider:before {
-        transform: translateX(26px);
+        transform: translateX(14px);
     }
 
-#theme-text {
-    margin-left: 10px;
-    font-size: 16px;
+/* Modos claro y oscuro */
+.light-mode {
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-/* Responsivo */
+.dark-mode {
+    background-color: #333;
+    color: #f4f4f4;
+}
+
+/* Media Queries para pantallas pequeñas */
 @media (max-width: 768px) {
-    .theme-switcher {
-        top: 10px;
-        right: 10px;
+    .navbar.fixed-left {
+        width: 100%; /* Oculta la barra lateral en pantallas pequeñas */
+        display: none;
+    }
+
+    .container {
+        margin-left: 0; /* Elimina el margen izquierdo */
     }
 }

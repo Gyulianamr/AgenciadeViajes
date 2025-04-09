@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
@@ -67,14 +68,14 @@
 <!-- Contenido sobre la imagen de fondo -->
 <div class="home-overlay">
     <div>
-        <h1 class="display-4">¡Bienvenido a la Agencia de Viajes!</h1>
+        <h1 class="display-4">Gestion de Empleados</h1>
         <p class="lead">
-            gestiona tus opciones con facilidad
+           Selecciona un Tipo de Empleado
         </p>
 
         <div class="mt-4">
-            <a href="@Url.Action("AgentedeViaje", "Home")" class="btn btn-success m-2">Ver Paquetes</a>
-            <a href="@Url.Action("GuiaTuristico", "Home")" class="btn btn-info m-2">Ver Reservas</a>
+            <a href="@Url.Action("AgentedeViaje", "Home")" class="btn btn-success m-2">Agente de Viaje</a>
+            <a href="@Url.Action("GuiaTuristico", "Home")" class="btn btn-info m-2">Guia Turisticos</a>
         </div>
     </div>
 </div>
