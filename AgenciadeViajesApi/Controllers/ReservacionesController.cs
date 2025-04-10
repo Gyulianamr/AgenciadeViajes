@@ -141,8 +141,7 @@ namespace AgenciadeViajesApi.Controllers
                 }
 
                 // Actualizar los campos de la reservación
-                existente.IdCotizacion = reservacion.IdCotizacion; // clave foránea
-                existente.Cotizacion = cotizacion; // relación
+                existente.IdCotizacion = reservacion.IdCotizacion; // relación
                 existente.FechaReservacion = reservacion.FechaReservacion;
                 existente.Estado = reservacion.Estado;
                 existente.FechaViaje = reservacion.FechaViaje;
@@ -152,6 +151,12 @@ namespace AgenciadeViajesApi.Controllers
                 // Calcular el nuevo saldo pendiente
                 existente.Saldopendiente = cotizacion.CostoTotal - reservacion.MontoPagado;
 
+                // Validar que los campos sean válidos antes de actualizar
+                if (existente.Saldopendiente < 0)
+                {
+                    return BadRequest("El saldo pendiente no puede ser negativo.");
+                }
+
                 db.Entry(existente).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -159,7 +164,7 @@ namespace AgenciadeViajesApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"Error: {ex.Message}");
             }
         }
 
