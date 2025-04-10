@@ -27,7 +27,7 @@ namespace AgenciadeViajesApi.Controllers
 
         // GET: api/PaquetesTuristicos
         /// <summary>
-        /// 
+        /// Metodo para ver la lista de paquetes turisticos
         /// </summary>
         /// <returns></returns>
         public IHttpActionResult Get()
@@ -64,7 +64,7 @@ namespace AgenciadeViajesApi.Controllers
 
         // GET: api/PaquetesTuristicos/5
         /// <summary>
-        /// 
+        /// Metodo para buscar un paquete por id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -108,6 +108,11 @@ namespace AgenciadeViajesApi.Controllers
         }
 
         // POST: api/PaquetesTuristicos
+        /// <summary>
+        /// Metodo para agregar un paquete nuevo
+        /// </summary>
+        /// <param name="paquete"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Paquete_Turistico))]
         public IHttpActionResult Post(Paquete_Turistico paquete)
         {
@@ -169,7 +174,7 @@ namespace AgenciadeViajesApi.Controllers
 
         // PUT: api/PaquetesTuristicos/5
         /// <summary>
-        /// 
+        /// Metodo para actualizar un paquete
         /// </summary>
         /// <param name="id"></param>
         /// <param name="paquete"></param>
@@ -202,20 +207,19 @@ namespace AgenciadeViajesApi.Controllers
                     return NotFound();
                 }
 
-                // Actualizar propiedades escalares
+               
                 paqueteExistente.Nombre = paquete.Nombre;
                 paqueteExistente.Duracion_Dias = paquete.Duracion_Dias;
                 paqueteExistente.FechaExpiracion = paquete.FechaExpiracion;
                 paqueteExistente.Estado = paquete.Estado;
 
-                // Actualizar IDs y relaciones
                 paqueteExistente.VueloId = paquete.VueloId;
                 paqueteExistente.HotelId = paquete.HotelId;
                 paqueteExistente.SeguroId = paquete.SeguroId;
                 paqueteExistente.GuiaTuristicoId = paquete.GuiaTuristicoId;
                 paqueteExistente.ActividadesId = paquete.ActividadesId;
 
-                // Cargar entidades relacionadas desde la base de datos usando los nuevos IDs
+            
                 paqueteExistente.Vuelo = paqueteExistente.VueloId.HasValue
                     ? db.Vuelos.Find(paqueteExistente.VueloId.Value)
                     : null;
@@ -236,7 +240,7 @@ namespace AgenciadeViajesApi.Controllers
                     ? db.Actividades.Find(paqueteExistente.ActividadesId.Value)
                     : null;
 
-                // Calcular el precio total
+             
                 double total = 0;
 
                 if (paqueteExistente.Vuelo != null)
@@ -269,6 +273,11 @@ namespace AgenciadeViajesApi.Controllers
 
 
         // DELETE: api/PaquetesTuristicos/5
+        /// <summary>
+        /// Metodo para eliminar un paquete turistico
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [ResponseType(typeof(Paquete_Turistico))]
         public IHttpActionResult Delete(int id)
         {
