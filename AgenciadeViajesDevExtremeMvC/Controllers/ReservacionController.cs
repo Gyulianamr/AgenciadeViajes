@@ -78,17 +78,17 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             var values = form.Get("values");
 
             var apiUrl = "https://localhost:44321/api/Reservaciones/" + key;
-            var respuestaPelic = await GetAsync(apiUrl);
+            var respuesta = await GetAsync(apiUrl);
 
-            if (respuestaPelic == null)
+            if (respuesta == null)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Reservacion no encontrada");
 
-            Reservacion reservacion = JsonConvert.DeserializeObject<Reservacion>(respuestaPelic);
+            Reservacion reservacion = JsonConvert.DeserializeObject<Reservacion>(respuesta);
             JsonConvert.PopulateObject(values, reservacion);
 
-            // Corrected URL usage here
+            
             var apiUrl1 = "https://localhost:44321/api/Cotizaciones/" + reservacion.IdCotizacion;
-            var respuestaJson1 = await GetAsync(apiUrl1); // Corrected variable from apiUrl to apiUrl1
+            var respuestaJson1 = await GetAsync(apiUrl); 
             Cotizacion cotizacion = JsonConvert.DeserializeObject<Cotizacion>(respuestaJson1);
             reservacion.Cotizacion = cotizacion;
 

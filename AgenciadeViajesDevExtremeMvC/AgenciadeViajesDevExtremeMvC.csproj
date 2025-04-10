@@ -139,6 +139,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Charset.css" />
     <Content Include="Content\cliente.png" />
+    <Content Include="Content\concha.jpg" />
     <Content Include="Content\cotizacion.png" />
     <Content Include="Content\dx-diagram.css" />
     <Content Include="Content\dx-diagram.min.css" />
@@ -196,12 +197,15 @@
     <Content Include="Content\foto.jpg" />
     <Content Include="Content\inicio.png" />
     <Content Include="Content\nueva.png" />
+    <Content Include="Content\otro.jpg" />
+    <Content Include="Content\palma.jpg" />
     <Content Include="Content\paquete .png" />
     <Content Include="Content\playa.jpg" />
     <Content Include="Content\playa1.jpg" />
     <Content Include="Content\reserva.png" />
     <Content Include="Content\script.js" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\sombra.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\aspnet\dx.aspnet.data.js" />
