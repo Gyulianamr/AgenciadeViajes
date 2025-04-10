@@ -10,7 +10,6 @@ namespace AgenciadeViajesApi.Models
     public class Vuelo
     {
         private int _idVuelo;
-        public string Nombre { get; set; }  
         private string _tipo;
         private Destino _origen;
         private Destino _destino;
@@ -20,122 +19,48 @@ namespace AgenciadeViajesApi.Models
         private int _capacidad;
         private double _precio;
 
+        // Claves foráneas
+        public int OrigenId { get; set; }
+        public int DestinoId { get; set; }
 
-        public Vuelo() { }
-
-
-        public Vuelo(int idVuelo, string tipo, string compañia, Destino origen,
-                     Destino destino, TimeSpan horaSalida, TimeSpan horaLlegada,
-                     int capacidad, double precio)
-        {
-            Id = idVuelo;
-            Tipo = tipo;
-            Compañia = compañia;
-            Origen = origen;
-            Destino = destino;
-            HoraSalida = horaSalida;
-            HoraLlegada = horaLlegada;
-            Capacidad = capacidad;
-            Precio = precio;
-        }
-
-
-        public int Id
-        {
-            get { return _idVuelo; }
-            set
-            {
-
-                _idVuelo = value;
-            }
-        }
-
-
+        // Propiedades públicas
+        public int Id { get; set; }
+        public string Nombre { get; set; }
         public string Tipo
         {
             get { return _tipo; }
-            set
-            {
-        
-                _tipo = value;
-            }
+            set { _tipo = value; }
         }
-
         public string Compañia
         {
             get { return _compañia; }
-            set
-            {
-               
-                _compañia = value;
-            }
+            set { _compañia = value; }
         }
-
-
-        public Destino Origen
-        {
-            get { return _origen; }
-            set
-            {
-                
-                _origen = value;
-            }
-        }
-
-
-        public Destino Destino
-        {
-            get { return _destino; }
-            set
-            {
-                _destino = value;
-            }
-        }
-
-
         public TimeSpan HoraSalida
         {
             get { return _horaSalida; }
-            set
-            {
-
-                _horaSalida = value;
-            }
+            set { _horaSalida = value; }
         }
-
-
         public TimeSpan HoraLlegada
         {
             get { return _horaLlegada; }
-            set
-            {
-
-                _horaLlegada = value;
-            }
+            set { _horaLlegada = value; }
         }
-
-
         public int Capacidad
         {
             get { return _capacidad; }
-            set
-            {
-                
-                _capacidad = value;
-            }
+            set { _capacidad = value; }
         }
-
-
         public double Precio
         {
             get { return _precio; }
-            set
-            {
-                
-                _precio = value;
-            }
+            set { _precio = value; }
         }
 
-       
+        // Propiedades de navegación
+        public virtual Destino Origen { get; set; }
+        public virtual Destino Destino { get; set; }
     }
+
+
 }

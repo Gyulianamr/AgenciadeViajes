@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace AgenciadeViajesApi.Controllers
 {
-
+    
     public class VueloController : ApiController
     {
         private Proyectodb db = new Proyectodb();
@@ -18,19 +18,56 @@ namespace AgenciadeViajesApi.Controllers
         /// <summary>
         /// Obtiene todos los transportes registrados
         /// </summary>
-        public IEnumerable<Vuelo> Get()
+        public IHttpActionResult GetVuelos()
         {
-            return db.Vuelos;
+            var vuelos = from v in db.Vuelos
+                         join origen in db.Destinos on v.OrigenId equals origen.Id
+                         join destino in db.Destinos on v.DestinoId equals destino.Id
+                         select new
+                         {
+                             v.Id,
+                             v.Nombre,
+                             v.Tipo,
+                             v.Compañia,
+                             v.HoraSalida,
+                             v.HoraLlegada,
+                             v.Capacidad,
+                             v.Precio,
+                             OrigenNombre = origen.NomDestino,
+                             DestinoNombre = destino.NomDestino
+                         };
+
+            return Ok(vuelos);
         }
 
         // GET: api/Transporte/5
         /// <summary>
         /// Busca transporte por ID
         /// </summary>
-        public IHttpActionResult GetBuscar(int id)
+        public IHttpActionResult GetVuelo(int id)
         {
-            Vuelo vuelo = db.Vuelos.Find(id);
-            if (vuelo == null) return NotFound();
+            var vuelo = from v in db.Vuelos
+                        join origen in db.Destinos on v.OrigenId equals origen.Id
+                        join destino in db.Destinos on v.DestinoId equals destino.Id
+                        select new
+                        {
+                            v.Id,
+                            v.Nombre,
+                            v.Tipo,
+                            v.Compañia,
+                            v.HoraSalida,
+                            v.HoraLlegada,
+                            v.Capacidad,
+                            v.Precio,
+                            OrigenNombre = origen.NomDestino,
+                            DestinoNombre = destino.NomDestino
+                        };
+
+            if (vuelo == null)
+            {
+                return NotFound();
+            }
+
             return Ok(vuelo);
         }
 
@@ -74,7 +111,7 @@ namespace AgenciadeViajesApi.Controllers
                 if (transporteExistente == null)
                     return NotFound();
 
-                // Actualizar propiedades
+             
                 transporteExistente.Nombre = transporte.Nombre;
                 transporteExistente.Precio = transporte.Precio;
                 transporteExistente.Tipo = transporte.Tipo;
