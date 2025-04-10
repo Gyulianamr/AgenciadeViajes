@@ -17,19 +17,6 @@
     .RemoteOperations(true)
     .Columns(columns => {
 
-        columns.AddFor(m => m.ZonaEspecializada);
-
-        columns.AddFor(m => m.Idiomas);
-
-        columns.AddFor(m => m.SalarioPorHora);
-
-        columns.AddFor(m => m.FechaContratacion);
-
-        columns.AddFor(m => m.HoraLlegada);
-
-        columns.AddFor(m => m.HoraSalida);
-
-        columns.AddFor(m => m.Salario);
 
         columns.AddFor(m => m.Id);
 
@@ -40,10 +27,30 @@
         columns.AddFor(m => m.Telefono);
 
         columns.AddFor(m => m.Correo);
+
+        columns.AddFor(m => m.ZonaEspecializada);
+
+        columns.AddFor(m => m.Idiomas);
+
+        columns.AddFor(m => m.FechaContratacion);
+
+        columns.AddFor(m => m.HoraLlegada);
+
+        columns.AddFor(m => m.HoraSalida);
+
+        columns.AddFor(m => m.Salario);
+        columns.AddFor(m => m.SalarioPorHora);
+
     })
     .Editing(e => e
         .AllowAdding(true)
         .AllowUpdating(true)
         .AllowDeleting(true)
     )
+        .Paging(p => p.PageSize(10))
+.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 5, 10, 20 }))
+.FilterRow(f => f.Visible(true))
+.SearchPanel(s => s.Visible(true).Width(240))
 )
+
+

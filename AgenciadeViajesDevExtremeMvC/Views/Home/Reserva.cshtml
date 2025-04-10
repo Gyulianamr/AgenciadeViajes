@@ -41,4 +41,9 @@
         .AllowUpdating(true)
         .AllowDeleting(true)
     )
+
+        .Paging(p => p.PageSize(10))
+.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 5, 10, 20 }))
+.FilterRow(f => f.Visible(true))
+.SearchPanel(s => s.Visible(true).Width(240))
 )

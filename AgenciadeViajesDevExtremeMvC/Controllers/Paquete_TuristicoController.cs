@@ -96,25 +96,33 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Paquete turístico no encontrado.");
                 }
 
-                // Deserializar el JSON como una lista de Paquete_Turistico
-                List<Paquete_Turistico> paquetes;
+                // Deserializar el JSON como un solo Paquete_Turistico
+                Paquete_Turistico paquete;
                 try
                 {
-                    paquetes = JsonConvert.DeserializeObject<List<Paquete_Turistico>>(respuestaJson);
+                    // Verificamos si viene como lista o como objeto
+                    if (respuestaJson.TrimStart().StartsWith("["))
+                    {
+                        var paquetes = JsonConvert.DeserializeObject<List<Paquete_Turistico>>(respuestaJson);
+                        if (paquetes == null || paquetes.Count == 0)
+                        {
+                            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No se encontraron paquetes turísticos en la respuesta.");
+                        }
+                        paquete = paquetes[0];
+                    }
+                    else
+                    {
+                        paquete = JsonConvert.DeserializeObject<Paquete_Turistico>(respuestaJson);
+                        if (paquete == null)
+                        {
+                            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "El paquete turístico no pudo ser deserializado.");
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, $"Error al deserializar el JSON: {ex.Message}");
                 }
-
-                // Verificar si se encontró al menos un paquete
-                if (paquetes == null || paquetes.Count == 0)
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No se encontraron paquetes turísticos en la respuesta.");
-                }
-
-                // Tomar el primer paquete del arreglo
-                var paquete = paquetes[0];
 
                 // Actualizar el paquete turístico con los nuevos valores
                 JsonConvert.PopulateObject(values, paquete);
@@ -160,22 +168,41 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
-
-        private async Task PopulateRelatedEntity<T>(int? id, string entityName, Action<T> assignAction)
+        private async Task PopulateRelatedEntity<T>(int id, string endpoint, Action<T> setEntity) where T : class
         {
-            if (!id.HasValue)
-            {
-                throw new ArgumentNullException(nameof(id), $"El ID de {entityName} no puede ser nulo.");
-            }
+            if (id == 0) return;
 
-            var apiUrl = $"https://localhost:44321/api/{entityName}/{id.Value}";
-            var respuestaJson = await GetAsync(apiUrl);
-            if (!string.IsNullOrEmpty(respuestaJson))
+            var url = $"https://localhost:44321/api/{endpoint}/{id}";
+            var json = await GetAsync(url);
+
+            if (string.IsNullOrEmpty(json)) return;
+
+            T entity;
+
+            try
             {
-                var entity = JsonConvert.DeserializeObject<T>(respuestaJson);
-                assignAction(entity);
+                if (json.TrimStart().StartsWith("["))
+                {
+                    var list = JsonConvert.DeserializeObject<List<T>>(json);
+                    entity = list?.FirstOrDefault();
+                }
+                else
+                {
+                    entity = JsonConvert.DeserializeObject<T>(json);
+                }
+
+                if (entity != null)
+                {
+                    setEntity(entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Puedes hacer log si quieres aquí
+                Console.WriteLine($"Error al deserializar {endpoint}: {ex.Message}");
             }
         }
+
 
 
 
