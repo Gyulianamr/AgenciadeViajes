@@ -90,9 +90,15 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             var apiUrl = "https://localhost:44321/api/Cotizaciones/" + key;
             var respuestaJson = await GetAsync(apiUrl);
             Cotizacion cotizacion = JsonConvert.DeserializeObject<Cotizacion>(respuestaJson);
+           
 
             JsonConvert.PopulateObject(values, cotizacion);
-            cotizacion.ActualizarCostoTotal(); // Asegurarse de actualizar el costo total
+            var apiUrl1 = "https://localhost:44321/api/PaquetesTuristicos/" + cotizacion.PaqueteId;
+            var respuestaJson1 = await GetAsync(apiUrl);
+            Paquete_Turistico paquete = JsonConvert.DeserializeObject<Paquete_Turistico>(respuestaJson1);
+
+            cotizacion.Paquete = paquete;
+   
 
             string jsonString = JsonConvert.SerializeObject(cotizacion);
             var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");

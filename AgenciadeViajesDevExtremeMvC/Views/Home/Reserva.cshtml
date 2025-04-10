@@ -2,7 +2,7 @@
     ViewData["Title"] = "Reserva";
 }
 
-<h2>Reserva</h2>
+<h2>Gesti&oacute;n de Reservaciones</h2>
 
 @(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Reservacion>()
     .DataSource(ds => ds.WebApi()
@@ -36,15 +36,9 @@
 
         columns.AddFor(m => m.Saldopendiente);
     })
-       .Editing(e => e
-       .Mode(GridEditMode.Popup)
+    .Editing(e => e
         .AllowAdding(true)
         .AllowUpdating(true)
         .AllowDeleting(true)
     )
-    .Paging(p => p.PageSize(10))
-.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 5, 10, 20 }))
-.FilterRow(f => f.Visible(true))
-.SearchPanel(s => s.Visible(true).Width(240))
 )
-

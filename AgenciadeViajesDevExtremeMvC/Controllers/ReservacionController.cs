@@ -23,8 +23,8 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
 
                 var respuestaJson = await GetAsync(apiUrl);
                 //System.Diagnostics.Debug.WriteLine(respuestaJson); imprimir info
-                List<Reservacion> listapaquete = JsonConvert.DeserializeObject<List<Reservacion>>(respuestaJson);
-                return Request.CreateResponse(DataSourceLoader.Load(listapaquete, loadOptions));
+                List<Reservacion> listaReservacion = JsonConvert.DeserializeObject<List<Reservacion>>(respuestaJson);
+                return Request.CreateResponse(DataSourceLoader.Load(listaReservacion, loadOptions));
             }
 
             public static async Task<string> GetAsync(string uri)
@@ -71,47 +71,55 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
                 return Request.CreateResponse(HttpStatusCode.Created);
             }
 
-            [HttpPut]
-            public async Task<HttpResponseMessage> Put(FormDataCollection form)
+        [HttpPut]
+        public async Task<HttpResponseMessage> Put(FormDataCollection form)
+        {
+            var key = Convert.ToInt32(form.Get("key"));
+            var values = form.Get("values");
+
+            var apiUrl = "https://localhost:44321/api/Reservaciones/" + key;
+            var respuestaPelic = await GetAsync(apiUrl);
+
+            if (respuestaPelic == null)
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Reservacion no encontrada");
+
+            Reservacion reservacion = JsonConvert.DeserializeObject<Reservacion>(respuestaPelic);
+            JsonConvert.PopulateObject(values, reservacion);
+
+            // Corrected URL usage here
+            var apiUrl1 = "https://localhost:44321/api/Cotizaciones/" + reservacion.IdCotizacion;
+            var respuestaJson1 = await GetAsync(apiUrl1); // Corrected variable from apiUrl to apiUrl1
+            Cotizacion cotizacion = JsonConvert.DeserializeObject<Cotizacion>(respuestaJson1);
+            reservacion.Cotizacion = cotizacion;
+
+            string jsonString = JsonConvert.SerializeObject(reservacion);
+            System.Diagnostics.Debug.WriteLine(jsonString);
+
+            var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
+
+            var handler = new HttpClientHandler
             {
-                var key = Convert.ToInt32(form.Get("key"));
-                var values = form.Get("values");
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+            };
 
-                var apiUrlGetPeli = "https://localhost:44321/api/Reservaciones/" + key;
-                var respuestaPelic = await GetAsync(apiUrlGetPeli);
+            using (var client = new HttpClient(handler))
+            {
+                var url = "https://localhost:44321/api/Reservaciones/" + key;
+                var response = await client.PutAsync(url, httpContent);
 
-                if (respuestaPelic == null)
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Cliente no encontrado");
-
-                Paquete_Turistico paquete = JsonConvert.DeserializeObject<Paquete_Turistico>(respuestaPelic);
-                JsonConvert.PopulateObject(values, paquete);
-
-                string jsonString = JsonConvert.SerializeObject(paquete);
-                System.Diagnostics.Debug.WriteLine(jsonString);
-
-                var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
-
-                var handler = new HttpClientHandler
+                if (!response.IsSuccessStatusCode)
                 {
-                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
-                };
-
-                using (var client = new HttpClient(handler))
-                {
-                    var url = "https://localhost:44321/api/Reservaciones/" + key;
-                    var response = await client.PutAsync(url, httpContent);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        var error = await response.Content.ReadAsStringAsync();
-                        return Request.CreateErrorResponse(response.StatusCode, error);
-                    }
+                    var error = await response.Content.ReadAsStringAsync();
+                    return Request.CreateErrorResponse(response.StatusCode, error);
                 }
-
-                return Request.CreateResponse(HttpStatusCode.OK);
             }
 
-            [HttpDelete]
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+      
+
+        [HttpDelete]
             public async Task<HttpResponseMessage> Delete(FormDataCollection form)
             {
                 var key = Convert.ToInt32(form.Get("key"));

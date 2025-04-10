@@ -1,62 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="~/Content/Site.css" rel="stylesheet" />
-    <title>Transacciones de Agencia de Viajes</title>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-    @Styles.Render("~/Content/bundle")
+
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/estilo.css" rel="stylesheet" />
+
+    <title>@ViewBag.Title - Agencia de Viajes</title>
+
+
+   
+
+
+
+
     @Styles.Render("~/Content/DevExtremeBundle")
     @Scripts.Render("~/Scripts/bundle")
     @Scripts.Render("~/Scripts/DevExtremeBundle")
 </head>
+<!-- Antes del </body> -->
 
-<body style="padding-top: 3.5rem;">
-    <!-- Viñeta con el nombre de la Agencia -->
-    <div class="navbar-header">
-        Agencia de Viajes
-    </div>
+<body class="light-mode">
+    <!-- Banner superior -->
+    <div class="navbar-header">Transacciones Agencia de Viajes</div>
 
-    <!-- Menú lateral fijo a la izquierda -->
-    <nav class="navbar fixed-left">
-        <!-- Botón para ocultar/mostrar menú -->
-        <button class="navbar-toggle">☰</button>
+    <!-- Menú horizontal debajo del banner -->
+    <!-- <nav class="navbar">    -- >-->
+    <!-- Barra lateral fija a la izquierda      <nav class="navbar fixed-left"> -->
 
+    <nav class="navbar">
         <ul class="navbar-nav">
-            <a href="@Url.Action("Index", "Home")" class="nav-link active">Inicio</a>
-            <li class="nav-item"><a href="@Url.Action("Cliente", "Home")" class="nav-link">Clientes</a></li>
-            <li class="nav-item"><a href="@Url.Action("Paquete", "Home")" class="nav-link">Paquetes Turisticos</a></li>
-            <li class="nav-item"><a href="@Url.Action("Reserva", "Home")" class="nav-link">Reservas</a></li>
-            <li class="nav-item"><a href="@Url.Action("Cotizacion", "Home")" class="nav-link">Cotización</a></li>
-            <li class="nav-item"><a href="@Url.Action("Factura", "Home")" class="nav-link">Factura</a></li>
+            <li class="nav-item">
+                <a href="@Url.Action("Index", "Home")" class="nav-link">
+                    <img src="~/Content/inicio.png" alt="Inicio" style="width: 20px; height: 20px; display: block; margin: 0 auto;">
+                    Inicio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Cliente", "Home")" class="nav-link">
+                    <img src="~/Content/cliente.png" alt="Clientes" style="width: 20px; height: 20px; display: block; margin: 0 auto;">
+                    Clientes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Paquete", "Home")" class="nav-link">
+                    <img src="~/Content/paquete .png" alt=" Paquetes Tur&#237;sticos" style="width: 20px; height: 20px; display: block; margin: 0 auto; ">
+                    Paquetes Tur&#237;sticos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Reserva", "Home")" class="nav-link">
+                    <img src="~/Content/reserva.png" alt="Reservas" style="width: 20px; height: 20px; display: block; margin: 0 auto; ">
+                    Reservas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Cotizacion", "Home")" class="nav-link">
+                    <img src="~/Content/cotizacion.png" alt="Cotizaci&oacute;n" style="width: 20px; height: 20px; display: block; margin: 0 auto;">
+                    Cotizaci&oacute;n
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="@Url.Action("Factura", "Home")" class="nav-link">
+                    <img src="~/Content/factura.png" alt="Facturas" style="width: 20px; height: 20px; display: block; margin: 0 auto; ">
+                    Factura
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img src="~/Content/empleado.png" alt="Empleados" style="width: 20px; height: 20px; display: block; margin: 0 auto; ">
+                    Empleados
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("AgentedeViaje", "Home")">Agente de Viaje</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("GuiaTuristico", "Home")">Gu&#237;a Tur&#237;stico</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
         </ul>
+
+
     </nav>
 
-    <!-- Contenedor para el contenido de la página -->
-    <div class="main-content">
-        <div class="container">
-            @RenderBody()
+    <!-- Contenedor principal con margen adecuado -->
+    <div class="container">
+        <!-- Contenido principal -->
+        <div class="main-content">
+            @RenderBody() <!-- Esto es obligatorio -->
         </div>
     </div>
 
-    <script>
-        const toggleButton = document.querySelector('.navbar-toggle');
-        const navbar = document.querySelector('.navbar');
-
-        // Funcionalidad para mostrar/ocultar el menú
-        toggleButton.addEventListener('click', () => {
-            if (navbar.style.transform === 'translateX(-250px)') {
-                navbar.style.transform = 'translateX(0)';
-            } else {
-                navbar.style.transform = 'translateX(-250px)';
-            }
-        });
-    </script>
+   
 </body>
 </html>
 

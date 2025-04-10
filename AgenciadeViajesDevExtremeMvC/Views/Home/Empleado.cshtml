@@ -1,0 +1,81 @@
+﻿@using AgenciadeViajesDevExtremeMvC.Models
+
+@{
+    ViewBag.Title = "Empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Eliminar el fondo general del body */
+    body {
+        background: none; /* Elimina el fondo general */
+        margin: 0; /* Asegura que no haya márgenes adicionales */
+        padding: 0; /* Elimina el padding por defecto */
+        overflow-x: hidden; /* Evita que se desplace horizontalmente */
+    }
+
+    /* Establecer fondo solo en el contenedor home-overlay */
+    .home-overlay {
+        background: url('@Url.Content("~/Content/playa.jpg")') no-repeat center center fixed;
+        background-size: cover; /* Asegura que la imagen cubra toda el área */
+        background-attachment: fixed; /* La imagen no se mueve al hacer scroll */
+        height: 100vh; /* Hace que el contenedor ocupe toda la altura de la pantalla */
+        width: 100vw; /* Asegura que el contenedor ocupe todo el ancho de la pantalla */
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3); /* Sombra opcional */
+        color: white; /* Color blanco para el texto */
+        max-width: 100%; /* Asegura que el ancho no esté limitado */
+        margin: 0; /* Elimina cualquier margen extra */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative; /* Para manejar el posicionamiento dentro del contenedor */
+    }
+
+    /* Modificar los estilos del título y los textos dentro del contenedor */
+    .home-overlay h1 {
+        color: white; /* El título será blanco */
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra sutil para mejorar la legibilidad */
+    }
+
+    .home-overlay p {
+        color: white; /* Asegura que el texto del párrafo sea blanco */
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra sutil para mejorar la legibilidad */
+    }
+
+    .home-overlay .btn {
+        font-weight: bold;
+    }
+
+    .home-overlay .btn-success {
+        background-color: #4caf50; /* Verde */
+        border: none;
+    }
+
+    .home-overlay .btn-info {
+        background-color: #2196f3; /* Azul */
+        border: none;
+    }
+
+    .home-overlay .btn-warning {
+        background-color: #ff9800; /* Naranja */
+        border: none;
+    }
+</style>
+
+<!-- Contenido sobre la imagen de fondo -->
+<div class="home-overlay">
+    <div>
+        <h1 class="display-4">Gestion de Empleados</h1>
+        <p class="lead">
+           Selecciona un Tipo de Empleado
+        </p>
+
+        <div class="mt-4">
+            <a href="@Url.Action("AgentedeViaje", "Home")" class="btn btn-success m-2">Agente de Viaje</a>
+            <a href="@Url.Action("GuiaTuristico", "Home")" class="btn btn-info m-2">Guia Turisticos</a>
+        </div>
+    </div>
+</div>

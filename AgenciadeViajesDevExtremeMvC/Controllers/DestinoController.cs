@@ -21,8 +21,8 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
 
             var respuestaJson = await GetAsync(apiUrl);
             //System.Diagnostics.Debug.WriteLine(respuestaJson); imprimir info
-            List<Destino> listacliente = JsonConvert.DeserializeObject<List<Destino>>(respuestaJson);
-            return Request.CreateResponse(DataSourceLoader.Load(listacliente, loadOptions));
+            List<Destino> listaDestino = JsonConvert.DeserializeObject<List<Destino>>(respuestaJson);
+            return Request.CreateResponse(DataSourceLoader.Load(listaDestino, loadOptions));
         }
 
         public static async Task<string> GetAsync(string uri)

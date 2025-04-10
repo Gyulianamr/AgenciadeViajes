@@ -134,9 +134,12 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Content\Agencia.jpg" />
+    <Content Include="Content\banner.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Charset.css" />
+    <Content Include="Content\cliente.png" />
+    <Content Include="Content\cotizacion.png" />
     <Content Include="Content\dx-diagram.css" />
     <Content Include="Content\dx-diagram.min.css" />
     <Content Include="Content\dx-gantt.css" />
@@ -186,7 +189,18 @@
     <Content Include="Content\dx.material.teal.light.css" />
     <Content Include="Content\dx.softblue.compact.css" />
     <Content Include="Content\dx.softblue.css" />
+    <Content Include="Content\empleado.png" />
+    <Content Include="Content\estilo.css" />
+    <Content Include="Content\factura.png" />
+    <Content Include="Content\fondo.jpg" />
+    <Content Include="Content\foto.jpg" />
+    <Content Include="Content\inicio.png" />
+    <Content Include="Content\nueva.png" />
+    <Content Include="Content\paquete .png" />
     <Content Include="Content\playa.jpg" />
+    <Content Include="Content\playa1.jpg" />
+    <Content Include="Content\reserva.png" />
+    <Content Include="Content\script.js" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -359,6 +373,9 @@
     <Content Include="Views\Home\Reserva.cshtml" />
     <Content Include="Views\Home\Cotizacion.cshtml" />
     <Content Include="Views\Home\Factura.cshtml" />
+    <Content Include="Views\Home\AgentedeViaje.cshtml" />
+    <Content Include="Views\Home\GuiaTuristico.cshtml" />
+    <Content Include="Views\Home\Empleado.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
