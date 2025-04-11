@@ -19,11 +19,11 @@ namespace AgenciadeViajesDevExtremeMvC.Models
         private int _capacidad;
         private double _precio;
 
-        // Claves foráneas
+     
         public int OrigenId { get; set; }
         public int DestinoId { get; set; }
 
-        // Propiedades públicas
+      
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Tipo
@@ -57,7 +57,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             set { _precio = value; }
         }
 
-        // Propiedades de navegación
+   
         public virtual Destino Origen { get; set; }
         public virtual Destino Destino { get; set; }
     }
