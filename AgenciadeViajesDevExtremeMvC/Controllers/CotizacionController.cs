@@ -55,6 +55,7 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
 
+
             using (var client = new HttpClient(handler))
             {
                 var response = await client.PostAsync(url, httpContent);
