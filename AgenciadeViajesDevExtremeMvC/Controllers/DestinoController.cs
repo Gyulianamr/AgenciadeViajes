@@ -46,5 +46,85 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             }
 
         }
+
+        [HttpPost]
+        public async Task<HttpResponseMessage> Post(FormDataCollection form)
+        {
+            var values = form.Get("values");
+            var httpContent = new StringContent(values, System.Text.Encoding.UTF8, "application/json");
+
+            var url = "https://localhost:44321/api/Destino";
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+
+            using (var client = new HttpClient(handler))
+            {
+                var response = await client.PostAsync(url, httpContent);
+                var result = await response.Content.ReadAsStringAsync();
+            }
+
+            return Request.CreateResponse(HttpStatusCode.Created);
+        }
+
+        [HttpPut]
+        public async Task<HttpResponseMessage> Put(FormDataCollection form)
+        {
+            var key = Convert.ToInt32(form.Get("key"));
+            var values = form.Get("values");
+
+            var apiUrlGetDestino = $"https://localhost:44321/api/Destino/{key}";
+            var respuestaDestino = await GetAsync(apiUrlGetDestino);
+
+            if (respuestaDestino == null)
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Destino no encontrado");
+
+            Destino destino = JsonConvert.DeserializeObject<Destino>(respuestaDestino);
+            JsonConvert.PopulateObject(values, destino);
+
+            string jsonString = JsonConvert.SerializeObject(destino);
+            System.Diagnostics.Debug.WriteLine(jsonString);
+
+            var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
+
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+            };
+
+            using (var client = new HttpClient(handler))
+            {
+                var url = $"https://localhost:44321/api/Destino/{key}";
+                var response = await client.PutAsync(url, httpContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    return Request.CreateErrorResponse(response.StatusCode, error);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpDelete]
+        public async Task<HttpResponseMessage> Delete(FormDataCollection form)
+        {
+            var key = Convert.ToInt32(form.Get("key"));
+            var apiUrlDelDestino = $"https://localhost:44321/api/Destino/{key}";
+
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+
+            using (var client = new HttpClient(handler))
+            {
+                var respuesta = await client.DeleteAsync(apiUrlDelDestino);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+
+
+
     }
 }
