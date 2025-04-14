@@ -408,6 +408,7 @@
     <Compile Include="Controllers\ReservacionController.cs" />
     <Compile Include="Controllers\SampleDataController.cs" />
     <Compile Include="Controllers\SeguroController.cs" />
+    <Compile Include="Controllers\TipoHabitacionController.cs" />
     <Compile Include="Controllers\VueloController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
