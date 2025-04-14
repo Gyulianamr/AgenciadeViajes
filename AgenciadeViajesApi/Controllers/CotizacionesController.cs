@@ -115,8 +115,9 @@ namespace AgenciadeViajesApi.Controllers
             {
                 return BadRequest("Paquete no válido");
             }
-
-            cotizacion.CostoTotal = cotizacion.Costo();
+            cotizacion.Paquete = paquete;
+            // cotizacionExistente.CostoTotal = cotizacionExistente.Paquete.PrecioTotal*cotizacionExistente.CantidadPersonas;
+            cotizacion.CostoTotal = cotizacion.Paquete.PrecioTotal*cotizacion.CantidadPersonas;
             cotizacion.FechaCotizacion = DateTime.Now;
 
             db.Cotizaciones.Add(cotizacion);
