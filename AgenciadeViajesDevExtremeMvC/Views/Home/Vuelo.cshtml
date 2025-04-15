@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Vuelo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Vuelo</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Vuelo>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("Vuelo")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.OrigenId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Vuelo").LoadAction("DestinoesLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+
+        columns.AddFor(m => m.DestinoId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Vuelo").LoadAction("DestinoesLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.Nombre);
+
+        columns.AddFor(m => m.Tipo);
+
+        columns.AddFor(m => m.Compañia);
+
+        columns.AddFor(m => m.HoraSalida);
+
+        columns.AddFor(m => m.HoraLlegada);
+
+        columns.AddFor(m => m.Capacidad);
+
+        columns.AddFor(m => m.Precio);
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+)

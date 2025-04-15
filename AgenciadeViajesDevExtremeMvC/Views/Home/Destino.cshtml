@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Destino";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Destino</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Destino>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("Destino")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.NomDestino);
+
+        columns.AddFor(m => m.Pais);
+
+        columns.AddFor(m => m.Descripcion);
+
+        columns.AddFor(m => m.Tipo);
+
+        columns.AddFor(m => m.Moneda);
+
+        columns.AddFor(m => m.RequiereVisa);
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+)

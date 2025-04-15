@@ -381,6 +381,11 @@
     <Content Include="Views\Home\Empleado.cshtml" />
     <Content Include="Views\Home\Cotizacion.cshtml" />
     <Content Include="Views\Home\Reserva.cshtml" />
+    <Content Include="Views\Home\Destino.cshtml" />
+    <Content Include="Views\Home\Vuelo.cshtml" />
+    <Content Include="Views\Home\Actividades.cshtml" />
+    <Content Include="Views\Home\Hotel.cshtml" />
+    <Content Include="Views\Home\Seguro.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

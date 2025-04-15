@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Actividades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Actividades</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Actividades>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("Actividades")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.Nombre);
+
+        columns.AddFor(m => m.Descripcion);
+
+        columns.AddFor(m => m.DuracionHoras);
+
+        columns.AddFor(m => m.RequiereReserva);
+
+        columns.AddFor(m => m.PrecioHora);
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+)
