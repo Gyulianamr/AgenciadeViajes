@@ -33,6 +33,7 @@ namespace AgenciadeViajesApi.Controllers
                          {
                              Id = cotizacion.Id,
                              ClienteId = cliente.Id,
+                             Nombre = cliente.Nombre,
                              AgenteResponsableId = agente.Id,
                              PaqueteId = paquete.Id,
                              CantidadPersonas = cotizacion.CantidadPersonas,

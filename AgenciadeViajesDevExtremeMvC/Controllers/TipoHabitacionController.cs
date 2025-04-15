@@ -7,22 +7,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace AgenciadeViajesDevExtremeMvC.Controllers
 {
-    public class DestinoController : ApiController
+    public class TipoHabitacionController : ApiController
     {
         [HttpGet]
         public async Task<HttpResponseMessage> Get(DataSourceLoadOptions loadOptions)
         {
-            var apiUrl = "https://localhost:44321/api/Destino";
+            var apiUrl = "https://localhost:44321/api/TipoHabitacion";
 
             var respuestaJson = await GetAsync(apiUrl);
-            //System.Diagnostics.Debug.WriteLine(respuestaJson); imprimir info
-            List<Destino> listaDestino = JsonConvert.DeserializeObject<List<Destino>>(respuestaJson);
-            return Request.CreateResponse(DataSourceLoader.Load(listaDestino, loadOptions));
+            List<TipoHabitacion> lista = JsonConvert.DeserializeObject<List<TipoHabitacion>>(respuestaJson);
+
+            return Request.CreateResponse(DataSourceLoader.Load(lista, loadOptions));
         }
 
         public static async Task<string> GetAsync(string uri)
@@ -31,20 +32,19 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             {
                 var handler = new HttpClientHandler();
                 handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+
                 using (var client = new HttpClient(handler))
                 {
                     var response = await client.GetAsync(uri);
                     response.EnsureSuccessStatusCode();
                     return await response.Content.ReadAsStringAsync();
                 }
-
             }
             catch (Exception e)
             {
                 var m = e.Message;
                 return null;
             }
-
         }
 
         [HttpPost]
@@ -53,7 +53,7 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             var values = form.Get("values");
             var httpContent = new StringContent(values, System.Text.Encoding.UTF8, "application/json");
 
-            var url = "https://localhost:44321/api/Destino";
+            var url = "https://localhost:44321/api/TipoHabitacion";
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
 
@@ -72,16 +72,16 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             var key = Convert.ToInt32(form.Get("key"));
             var values = form.Get("values");
 
-            var apiUrlGetDestino = $"https://localhost:44321/api/Destino/{key}";
-            var respuestaDestino = await GetAsync(apiUrlGetDestino);
+            var apiUrl = $"https://localhost:44321/api/TipoHabitacion/{key}";
+            var respuesta = await GetAsync(apiUrl);
 
-            if (respuestaDestino == null)
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Destino no encontrado");
+            if (respuesta == null)
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "TipoHabitacion no encontrado");
 
-            Destino destino = JsonConvert.DeserializeObject<Destino>(respuestaDestino);
-            JsonConvert.PopulateObject(values, destino);
+            TipoHabitacion tipoHabitacion = JsonConvert.DeserializeObject<TipoHabitacion>(respuesta);
+            JsonConvert.PopulateObject(values, tipoHabitacion);
 
-            string jsonString = JsonConvert.SerializeObject(destino);
+            string jsonString = JsonConvert.SerializeObject(tipoHabitacion);
             System.Diagnostics.Debug.WriteLine(jsonString);
 
             var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
@@ -93,7 +93,7 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
 
             using (var client = new HttpClient(handler))
             {
-                var url = $"https://localhost:44321/api/Destino/{key}";
+                var url = $"https://localhost:44321/api/TipoHabitacion/{key}";
                 var response = await client.PutAsync(url, httpContent);
 
                 if (!response.IsSuccessStatusCode)
@@ -110,21 +110,18 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
         public async Task<HttpResponseMessage> Delete(FormDataCollection form)
         {
             var key = Convert.ToInt32(form.Get("key"));
-            var apiUrlDelDestino = $"https://localhost:44321/api/Destino/{key}";
+            var apiUrl = $"https://localhost:44321/api/TipoHabitacion/{key}";
 
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
 
             using (var client = new HttpClient(handler))
             {
-                var respuesta = await client.DeleteAsync(apiUrlDelDestino);
+                var respuesta = await client.DeleteAsync(apiUrl);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK);
         }
-
-
-
 
     }
 }

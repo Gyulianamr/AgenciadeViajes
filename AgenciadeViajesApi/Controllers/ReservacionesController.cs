@@ -26,7 +26,7 @@ namespace AgenciadeViajesApi.Controllers
                          {
                              Id = reserva.Id,
                              IdCotizacion = cotizacion.Id,
-                             ClienteNombre = cliente.Nombre,
+                             Nombre =cliente.Nombre,
                              FechaReservacion = reserva.FechaReservacion,
                              Estado = reserva.Estado,
                              FechaViaje = reserva.FechaViaje,
@@ -35,8 +35,9 @@ namespace AgenciadeViajesApi.Controllers
                              Saldopendiente = cotizacion.CostoTotal - reserva.MontoPagado
                          };
 
-           
-            return Ok(result);
+
+            return Ok(result.ToList());
+
         }
 
 
