@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Hotel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Hotel</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Hotel>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("Hotel")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.Nombre);
+
+        columns.AddFor(m => m.Estrellas);
+
+        columns.AddFor(m => m.Direccion);
+
+        columns.AddFor(m => m.TipoHabitacionId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Hotel").LoadAction("TipoHabitacionsLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+)

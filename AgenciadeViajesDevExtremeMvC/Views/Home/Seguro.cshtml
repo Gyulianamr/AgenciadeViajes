@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Seguro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Seguro</h2>
+
+@(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Seguro>()
+    .DataSource(ds => ds.WebApi()
+        .Controller("Seguro")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("Id")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.Nombre);
+
+        columns.AddFor(m => m.Tipo);
+
+        columns.AddFor(m => m.Cobertura);
+
+        columns.AddFor(m => m.DuracionDias);
+
+        columns.AddFor(m => m.Precio);
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+)
