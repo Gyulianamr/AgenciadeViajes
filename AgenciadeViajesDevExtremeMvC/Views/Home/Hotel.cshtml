@@ -26,9 +26,13 @@
         columns.AddFor(m => m.Direccion);
 
         columns.AddFor(m => m.TipoHabitacionId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Hotel").LoadAction("TipoHabitacionsLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
+     .DataSource(ds => ds.WebApi()
+         .Controller("TipoHabitacion")
+         .LoadAction("Get")
+         .Key("Id")
+     )
+     .ValueExpr("Id")
+     .DisplayExpr("NombreHabitacion")
         );
     })
     .Editing(e => e
