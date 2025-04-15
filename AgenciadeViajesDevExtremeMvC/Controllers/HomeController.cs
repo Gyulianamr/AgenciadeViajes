@@ -60,5 +60,11 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers {
 
             return View();
         }
+
+        public ActionResult Hotel()
+        {
+
+            return View();
+        }
     }
 }
