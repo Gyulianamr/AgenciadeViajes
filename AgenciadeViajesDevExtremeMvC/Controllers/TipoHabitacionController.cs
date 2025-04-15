@@ -13,7 +13,7 @@ using System.Web.Http;
 
 namespace AgenciadeViajesDevExtremeMvC.Controllers
 {
-    public class TipoHabitacionController : ApiController
+    public class TipoHabitacionController : ApiController //
     {
         //Creacion de Tipo de habitacion metodos
         [HttpGet]
