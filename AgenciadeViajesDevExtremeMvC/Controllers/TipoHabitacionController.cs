@@ -15,7 +15,7 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
 {
     public class TipoHabitacionController : ApiController
     {
-        //Creacion de habitacion
+        //Creacion de Tipo de habitacion metodos
         [HttpGet]
         public async Task<HttpResponseMessage> Get(DataSourceLoadOptions loadOptions)
         {
