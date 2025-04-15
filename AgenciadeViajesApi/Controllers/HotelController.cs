@@ -82,12 +82,8 @@ namespace AgenciadeViajesApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (hotel.Tipohabitacion == null || hotel.Tipohabitacion.Id == 0)
-            {
-                return BadRequest("Tipo de habitación no válido o no enviado correctamente.");
-            }
 
-            var tipo = db.TiposdeHabitacion.Find(hotel.Tipohabitacion.Id);
+            var tipo = db.TiposdeHabitacion.Find(hotel.TipoHabitacionId);
             if (tipo == null)
             {
                 return BadRequest("Tipo de habitación no encontrado en la base de datos.");
