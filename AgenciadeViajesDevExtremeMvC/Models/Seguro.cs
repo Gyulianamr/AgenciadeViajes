@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -39,6 +40,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Nombre no debe quedar vacio")]
         public string Nombre
         {
             get { return _nombre; }
@@ -54,6 +56,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Tipo no debe quedar vacio")]
         public string Tipo
         {
             get { return _tipo; }
@@ -69,6 +72,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo cobertura no debe quedar vacio")]
         public string Cobertura
         {
             get { return _cobertura; }
@@ -81,6 +85,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Range(0.01, int.MaxValue, ErrorMessage = "La cantidad en duracion de dias debe ser mayor a 0")]
         public int DuracionDias
         {
             get { return _duracionDias; }
@@ -92,6 +97,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad en el precio debe ser mayor a 0")]
         public double Precio
         {
             get { return _precio; }
