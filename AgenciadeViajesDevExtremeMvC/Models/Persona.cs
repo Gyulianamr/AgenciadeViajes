@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -36,6 +37,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Nombre no debe quedar vacio")]
         public string Nombre
         {
             get { return _nombre; }
@@ -51,6 +53,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Apellido no debe quedar vacio")]
         public string Apellido
         {
             get { return _apellido; }
@@ -62,6 +65,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Telefono no debe quedar vacio")]
         public string Telefono
         {
             get { return _telefono; }
@@ -73,6 +77,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Correo no debe quedar vacio")]
         public string Correo
         {
             get { return _correo; }
