@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -33,6 +34,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Nombre no debe quedar vacio")]
         public string Nombre
         {
             get { return _nombre; }
@@ -48,6 +50,8 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+
+        [Required(ErrorMessage = "El campo Descripcion no debe quedar vacio")]
         public string Descripcion
         {
             get { return _descripcion; }
