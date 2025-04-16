@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,12 +12,12 @@
 
 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="~/Content/estilo.css" rel="stylesheet" />
+    <link href="~/Content/estilo1.css" rel="stylesheet" />
 
     <title>@ViewBag.Title - Agencia de Viajes</title>
 
 
-   
+
 
 
 
@@ -36,86 +36,106 @@
     <!-- <nav class="navbar">    -- >-->
     <!-- Barra lateral fija a la izquierda      <nav class="navbar fixed-left"> -->
 
-    <nav class="navbar">
-        <ul class="navbar-nav">
+    <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
+        <!-- Menú principal centrado -->
+       
+           
+        <nav class="navbar">
+            <ul class="navbar-nav mx-auto" style="display: flex; gap: 20px; align-items: center;">
 
 
-            <li class="nav-item">
-                <a href="@Url.Content("~/Content/ManualdeUsuario.pdf")" class="nav-link" target="_blank">
-                    <i class="fas fa-info-circle"></i> Acerca de (ManualdeUsuario)
-                </a>
-            </li>
+                
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Home")" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                        <img src="~/Content/inicio.png" alt="Inicio" style="width: 30px; height: 30px;">
+                        Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Cliente", "Home")" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                        <img src="~/Content/cliente.png" alt="Clientes" style="width: 30px; height: 30px;">
+                        Clientes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Paquete", "Home")" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                        <img src="~/Content/paquete .png" alt=" Paquetes Tur&#237;sticos" style="width: 30px; height: 30px; ">
+                        Paquetes Tur&#237;sticos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Reserva", "Home")" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                        <img src="~/Content/reserva.png" alt="Reservas" style="width: 30px; height: 30px; ">
+                        Reservas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Cotizacion", "Home")" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                        <img src="~/Content/cotizacion.png" alt="Cotizaci&oacute;n" style="width: 30px; height: 30px;">
+                        Cotizaci&oacute;n
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Factura", "Home")" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                        <img src="~/Content/factura.png" alt="Facturas" style="width: 30px; height: 30px;">
+                        <span>Factura</span>
+                    </a>
+
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                       style="display: flex; align-items: center; gap: 8px;">
+                        <img src="~/Content/empleado.png" alt="Empleados" style="width: 30px; height: 30px;">
+                        <span>Empleados</span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("AgentedeViaje", "Home")">Agente de Viaje</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("GuiaTuristico", "Home")">Gu&#237;a Tur&#237;stico</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Manual alineado a la derecha -->
+                <ul class="navbar-nav" style="margin-left: auto;">
+                    <li class="nav-item">
+                        <a href="@Url.Content("~/Content/ManualdeUsuario.pdf")" class="nav-link" target="_blank" title="Acerca de (Manual de Usuario)">
+                            <img src="~/Content/manual.png" alt="Acerca de" style="width: 30px; height: 30px;">
+                        </a>
 
 
 
-            <li class="nav-item">
-                <a href="@Url.Action("Index", "Home")" class="nav-link">
-                    <img src="~/Content/inicio.png" alt="Inicio" style="width: 20px; height: 20px; display: block; margin: 0 auto;">
-                    Inicio
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="@Url.Action("Cliente", "Home")" class="nav-link">
-                    <img src="~/Content/cliente.png" alt="Clientes" style="width: 20px; height: 20px; display: block; margin: 0 auto;">
-                    Clientes
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="@Url.Action("Paquete", "Home")" class="nav-link">
-                    <img src="~/Content/paquete .png" alt=" Paquetes Tur&#237;sticos" style="width: 20px; height: 20px; display: block; margin: 0 auto; ">
-                    Paquetes Tur&#237;sticos
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="@Url.Action("Reserva", "Home")" class="nav-link">
-                    <img src="~/Content/reserva.png" alt="Reservas" style="width: 20px; height: 20px; display: block; margin: 0 auto; ">
-                    Reservas
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="@Url.Action("Cotizacion", "Home")" class="nav-link">
-                    <img src="~/Content/cotizacion.png" alt="Cotizaci&oacute;n" style="width: 20px; height: 20px; display: block; margin: 0 auto;">
-                    Cotizaci&oacute;n
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="@Url.Action("Factura", "Home")" class="nav-link">
-                    <img src="~/Content/factura.png" alt="Facturas" style="width: 20px; height: 20px; display: block; margin: 0 auto; ">
-                    Factura
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="~/Content/empleado.png" alt="Empleados" style="width: 20px; height: 20px; display: block; margin: 0 auto; ">
-                    Empleados
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a class="dropdown-item" href="@Url.Action("AgentedeViaje", "Home")">Agente de Viaje</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="@Url.Action("GuiaTuristico", "Home")">Gu&#237;a Tur&#237;stico</a>
-                    </li>
                 </ul>
-            </li>
+            </ul>
+
+        </nav>
+                    <!-- Barra inferior -->
+                    <footer class="bottom-bar">
+                        <nav class="bottom-nav">
+                            <a href="@Url.Action("Hotel", "Home")" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                                <img src="~/Content/Hotel.png" alt="Hotel" style="width: 30px; height: 30px;">
+                                Hotel
+                            </a>
+
+                            <a href="#">Vuelo</a>
+                            <a href="#">Actividades</a>
+                            <a href="#">Destino</a>
+                        </nav>
+                    </footer>
 
 
+                    <!-- Contenedor principal con margen adecuado -->
+                    <div class="container">
+                        <!-- Contenido principal -->
+                        <div class="main-content">
+                            @RenderBody() <!-- Esto es obligatorio -->
+                        </div>
+                    </div>
 
 
-        </ul>
-
-
-    </nav>
-
-    <!-- Contenedor principal con margen adecuado -->
-    <div class="container">
-        <!-- Contenido principal -->
-        <div class="main-content">
-            @RenderBody() <!-- Esto es obligatorio -->
-        </div>
-    </div>
-
-   
 </body>
 </html>
 
