@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -27,8 +28,8 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             SalarioPorHora = salarioPorHora;
         }
 
-      
 
+        [Required(ErrorMessage = "El campo Zona especializada no debe quedar vacio")]
         public string ZonaEspecializada
         {
             get { return _zonaEspecializada; }
@@ -44,6 +45,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo idiomas no debe quedar vacio")]
         public string Idiomas
         {
             get { return _idiomas; }
@@ -59,6 +61,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0")]
         public double SalarioPorHora
         {
             get { return _salarioPorHora; }
