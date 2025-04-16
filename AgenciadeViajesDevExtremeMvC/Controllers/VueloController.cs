@@ -15,13 +15,13 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
 {
     public class VueloController : ApiController
     {
+       // Actualice el post,put,delete
         [HttpGet]
         public async Task<HttpResponseMessage> Get(DataSourceLoadOptions loadOptions)
         {
             var apiUrl = "https://localhost:44321/api/Vuelo";
-
             var respuestaJson = await GetAsync(apiUrl);
-            //System.Diagnostics.Debug.WriteLine(respuestaJson); imprimir info
+
             List<Vuelo> listaVuelo = JsonConvert.DeserializeObject<List<Vuelo>>(respuestaJson);
             return Request.CreateResponse(DataSourceLoader.Load(listaVuelo, loadOptions));
         }
@@ -38,32 +38,28 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
                     response.EnsureSuccessStatusCode();
                     return await response.Content.ReadAsStringAsync();
                 }
-
             }
             catch (Exception e)
             {
                 var m = e.Message;
                 return null;
             }
-
         }
 
         [HttpPost]
         public async Task<HttpResponseMessage> Post(FormDataCollection form)
         {
-
             var values = form.Get("values");
-
             var httpContent = new StringContent(values, System.Text.Encoding.UTF8, "application/json");
 
             var url = "https://localhost:44321/api/Vuelo";
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+
             using (var client = new HttpClient(handler))
             {
                 var response = await client.PostAsync(url, httpContent);
-
-                var result = response.Content.ReadAsStringAsync().Result;
+                var result = await response.Content.ReadAsStringAsync();
             }
 
             return Request.CreateResponse(HttpStatusCode.Created);
@@ -75,25 +71,28 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
             var key = Convert.ToInt32(form.Get("key"));
             var values = form.Get("values");
 
+            // Obtener el vuelo actual
             var apiUrl = "https://localhost:44321/api/Vuelo/" + key;
-            var respuestaPelic = await GetAsync(apiUrl);
+            var respuestaJson = await GetAsync(apiUrl);
+            Vuelo vuelo = JsonConvert.DeserializeObject<Vuelo>(respuestaJson);
 
-            if (respuestaPelic == null)
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Vuelo No encontrado");
-
-            Vuelo vuelo = JsonConvert.DeserializeObject<Vuelo>(respuestaPelic);
+            // Actualizar los valores del vuelo con los nuevos datos
             JsonConvert.PopulateObject(values, vuelo);
 
-            var apiUrl1 = "https://localhost:44321/api/PaquetesTuristicos/" + vuelo.Destino;
-            var respuestaJson1 = await GetAsync(apiUrl);
-            Destino destino = JsonConvert.DeserializeObject<Destino>(respuestaJson1);
-
+            // Obtener los datos del Destino
+            var urlDestino = "https://localhost:44321/api/Destino/" + vuelo.DestinoId;
+            var respuestaDestino = await GetAsync(urlDestino);
+            Destino destino = JsonConvert.DeserializeObject<Destino>(respuestaDestino);
             vuelo.Destino = destino;
 
+            // Obtener los datos del Origen
+            var urlOrigen = "https://localhost:44321/api/Destino/" + vuelo.OrigenId;
+            var respuestaOrigen = await GetAsync(urlOrigen);
+            Destino origen = JsonConvert.DeserializeObject<Destino>(respuestaOrigen);
+            vuelo.Origen = origen;
 
-            string jsonString = JsonConvert.SerializeObject(vuelo);
-            System.Diagnostics.Debug.WriteLine(jsonString);
-
+            // Serializar el objeto actualizado
+            var jsonString = JsonConvert.SerializeObject(vuelo);
             var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
 
             var handler = new HttpClientHandler
@@ -120,16 +119,19 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
         public async Task<HttpResponseMessage> Delete(FormDataCollection form)
         {
             var key = Convert.ToInt32(form.Get("key"));
+            var apiUrlDel = "https://localhost:44321/api/Vuelo/" + key;
 
-            var apiUrlDelPeli = "https://localhost:44321/api/Vuelo/" + key;
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+
             using (var client = new HttpClient(handler))
             {
-                var respuestaPelic = await client.DeleteAsync(apiUrlDelPeli);
+                var response = await client.DeleteAsync(apiUrlDel);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
 
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+
     }
 }

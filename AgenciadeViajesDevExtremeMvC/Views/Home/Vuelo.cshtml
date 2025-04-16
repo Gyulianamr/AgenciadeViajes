@@ -18,15 +18,15 @@
     .Columns(columns => {
 
         columns.AddFor(m => m.OrigenId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Vuelo").LoadAction("DestinoesLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
+            .DataSource(ds => ds.WebApi().Controller("Destino").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("NomDestino") // Asegúrate que este campo exista en la clase Destino
         );
 
         columns.AddFor(m => m.DestinoId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Vuelo").LoadAction("DestinoesLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
+            .DataSource(ds => ds.WebApi().Controller("Destino").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("NomDestino")
         );
 
         columns.AddFor(m => m.Id);
