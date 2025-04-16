@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -31,18 +32,21 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             set { _id = value; }
         }
 
+        [Required(ErrorMessage = "El campo Nombre de habitacion no debe quedar vacio")]
         public string NombreHabitacion
         {
             get { return _nombreHabitacion; }
             set { _nombreHabitacion = value; }
         }
 
+        [Required(ErrorMessage = "El campo Descripcion no debe quedar vacio")]
         public string Descripcion
         {
             get { return _descripcion; }
             set { _descripcion = value; }
         }
 
+        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad en precio por noche debe ser mayor a 0")]
         public double PrecioPorNoche
         {
             get { return _precioPorNoche; }
