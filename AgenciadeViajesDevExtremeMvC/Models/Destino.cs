@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -38,6 +39,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Nombre de destino no debe quedar vacio")]
         public string NomDestino
         {
             get { return _nomdestino; }
@@ -53,6 +55,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo pais no debe quedar vacio")]
         public string Pais
         {
             get { return _pais; }
@@ -68,6 +71,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo descripcion no debe quedar vacio y no debe exceder de 500 caracteres")]
         public string Descripcion
         {
             get { return _descrip; }
@@ -79,6 +83,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Tipo no debe quedar vacio")]
         public string Tipo
         {
             get { return _tipo; }
@@ -94,6 +99,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo Moneda no debe quedar vacio, debe ser un código de 3 caracteres ")]
         public string Moneda
         {
             get { return _moneda; }
