@@ -133,14 +133,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Content\actividad %282%29.png" />
     <Content Include="Content\Agencia.jpg" />
     <Content Include="Content\banner.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\building_18828479.png" />
+    <Content Include="Content\canada.jpg" />
+    <Content Include="Content\Captura_de_pantalla_2025-04-18_110549-removebg-preview.png" />
     <Content Include="Content\Charset.css" />
     <Content Include="Content\cliente.png" />
     <Content Include="Content\concha.jpg" />
     <Content Include="Content\cotizacion.png" />
+    <Content Include="Content\destino.png" />
     <Content Include="Content\dx-diagram.css" />
     <Content Include="Content\dx-diagram.min.css" />
     <Content Include="Content\dx-gantt.css" />
@@ -191,11 +196,18 @@
     <Content Include="Content\dx.softblue.compact.css" />
     <Content Include="Content\dx.softblue.css" />
     <Content Include="Content\empleado.png" />
-    <Content Include="Content\estilo.css" />
+    <Content Include="Content\estilo11.css" />
     <Content Include="Content\factura.png" />
     <Content Include="Content\fondo.jpg" />
     <Content Include="Content\foto.jpg" />
+    <Content Include="Content\Hotel.png" />
     <Content Include="Content\inicio.png" />
+    <Content Include="Content\logo %282%29.png" />
+    <Content Include="Content\logo.png" />
+    <Content Include="Content\manual.png" />
+    <Content Include="Content\medellin.jpg" />
+    <Content Include="Content\menu_18814807.png" />
+    <Content Include="Content\Nueva.jpg" />
     <Content Include="Content\nueva.png" />
     <Content Include="Content\otro.jpg" />
     <Content Include="Content\palma.jpg" />
@@ -204,8 +216,11 @@
     <Content Include="Content\playa1.jpg" />
     <Content Include="Content\reserva.png" />
     <Content Include="Content\script.js" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\seguro.png" />
     <Content Include="Content\sombra.jpg" />
+    <Content Include="Content\venecia.jpg" />
+    <Content Include="Content\Viaje.jpg" />
+    <Content Include="Content\vuelo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\aspnet\dx.aspnet.data.js" />

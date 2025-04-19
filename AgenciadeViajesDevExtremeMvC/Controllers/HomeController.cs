@@ -66,5 +66,29 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers {
 
             return View();
         }
+
+        public ActionResult Seguro()
+        {
+
+            return View();
+        }
+
+        public ActionResult Vuelo()
+        {
+
+            return View();
+        }
+
+        public ActionResult  Actividades()
+        {
+
+            return View();
+        }
+
+        public ActionResult Destino()
+        {
+
+            return View();
+        }
     }
 }

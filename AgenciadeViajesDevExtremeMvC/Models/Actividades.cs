@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -33,6 +34,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             set { _idActividad = value; }
         }
 
+        [Required(ErrorMessage = "El campo Nombre no debe quedar vacio")]
         public string Nombre
         {
             get { return _nombre; }
@@ -44,12 +46,14 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo descripción no debe quedar vacio")]
         public string Descripcion
         {
             get { return _descripcion; }
             set { _descripcion = value; }
         }
 
+        [Range(0.01, int.MaxValue, ErrorMessage = "La cantidad de horas debe ser mayor a 0")]
         public int DuracionHoras
         {
             get { return _duracionHoras; }
@@ -67,6 +71,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             set { _requiereReserva = value; }
         }
 
+        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0")]
         public double PrecioHora
         {
             get { return _precioHora; }

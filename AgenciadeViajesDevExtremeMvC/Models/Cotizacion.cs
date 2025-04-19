@@ -28,8 +28,13 @@ namespace AgenciadeViajesDevExtremeMvC.Models
         [ForeignKey("PaqueteId")]
         public virtual Paquete_Turistico Paquete { get; set; }  // Relación con Paquete Turístico
 
+        [Range(0.01, int.MaxValue, ErrorMessage = "La cantidad de personas debe ser mayor a 0")]
         public int CantidadPersonas { get; set; }
+
+        [Required(ErrorMessage = "El campo Fecha no debe quedar vacio")]
         public DateTime FechaCotizacion { get; set; }
+
+        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0")]
         public double CostoTotal { get; set; }
 
         // Constructor vacío

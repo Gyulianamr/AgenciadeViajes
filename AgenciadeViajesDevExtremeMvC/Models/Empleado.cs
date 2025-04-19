@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 namespace AgenciadeViajesDevExtremeMvC.Models
@@ -26,8 +27,8 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             Salario = salario;
         }
 
-       
 
+        [Required(ErrorMessage = "El campo fecha de contratacion no debe quedar vacio")]
         public DateTime FechaContratacion
         {
             get { return _fechacontratacion; }
@@ -39,6 +40,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo hora de llegada no debe quedar vacio")]
         public TimeSpan HoraLlegada
         {
             get { return _horallegada; }
@@ -50,6 +52,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Required(ErrorMessage = "El campo hora de salida no debe quedar vacio")]
         public TimeSpan HoraSalida
         {
             get { return _horasalida; }
@@ -61,6 +64,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
+        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0")]
         public double Salario
         {
             get { return _salario; }

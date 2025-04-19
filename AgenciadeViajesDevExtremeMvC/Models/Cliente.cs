@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -20,7 +21,8 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             Ciudad = ciudad;
         }
 
-        
+
+        [Required(ErrorMessage = "El campo Ciudad no debe quedar vacio")]
         public string Ciudad
         {
             get { return _ciudad; }

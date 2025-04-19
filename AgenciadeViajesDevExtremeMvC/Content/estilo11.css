@@ -4,7 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-image: url('concha.jpg');
+    background-image: url('Nueva.jpg'); /* Cambia por una imagen panorámica */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -16,14 +16,14 @@ html, body {
 /* Banner superior */
 .navbar-header {
     width: 100%;
-    height: 150px;
+    height: 100px;
     background: linear-gradient(to bottom, #00BFFF, #87CEEB);
-    background-image: url('concha.jpg');
+    background-image: url('Nueva.jpg');
     background-size: cover;
     background-position: center;
     color: white;
     font-family: 'Poppins', sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     font-size: clamp(2rem, 5vw, 3rem);
     text-align: center;
     display: flex;
@@ -33,35 +33,19 @@ html, body {
     margin-bottom: 0rem;
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
     position: relative;
-    padding: 0 20px;
-}
-
-    /* Efecto de transición suave */
-    .navbar-header:hover {
-        background: linear-gradient(to bottom, #ADD8E6, #FFFFFF);
-        animation: pulse 1.5s infinite alternate;
-    }
-
-/* Animación de pulso */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    100% {
-        transform: scale(1.05);
-    }
+    padding: 0 10px;
 }
 
 /* Menú horizontal */
 .navbar {
     width: 100%;
-    background: linear-gradient(to right, #D4E1D4, #B2F2BB);
+    background-color: white;
     padding: 10px 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 
 /* Estilo de los enlaces */
 .nav-link {
@@ -93,75 +77,66 @@ h2, h3, h4, h5, h6 {
     gap: 15px;
     justify-content: center;
 }
-
-/* Interruptor de tema */
-.theme-switcher {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: 20px;
+/* Contenedor del botón hamburguesa */
+/* Contenedor del botón hamburguesa */
+.menu-toggle-container {
+    display: flex; /* Mostrar siempre */
+    align-items: center; /* Alinear verticalmente */
 }
 
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 20px;
-}
-
-    .switch input {
-        display: none;
-    }
-
-.slider {
-    position: absolute;
+/* Estilo del botón hamburguesa */
+.menu-toggle {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
     cursor: pointer;
+    color: #333;
+    padding: 10px; /* Espacio alrededor del icono */
+}
+
+/* Menú lateral */
+.sidebar {
+    display: none; /* Ocultar inicialmente */
+    position: fixed; /* Posicionarlo fijo sobre el contenido */
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    border-radius: 20px;
-    transition: 0.4s;
+    height: 100vh; /* Altura completa de la pantalla */
+    width: 15%; /* Ancho del menú lateral */
+    background-color: #fff; /* Fondo blanco */
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    z-index: 999; /* Asegurar que esté encima de otros elementos */
+    overflow-y: auto; /* Permitir desplazamiento vertical si es necesario */
 }
 
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 14px;
-        width: 14px;
-        left: 3px;
-        bottom: 3px;
-        background-color: white;
-        border-radius: 50%;
-        transition: 0.4s;
+    /* Mostrar el menú lateral cuando tenga la clase "active" */
+    .sidebar.active {
+        display: block; /* Mostrar cuando esté activo */
+    }
+/* Respuesta para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .navbar-header {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        height: 120px;
     }
 
-input:checked + .slider {
-    background-color: #2196f3;
+    .navbar-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .search-form {
+        max-width: 100%;
+    }
 }
 
-    input:checked + .slider:before {
-        transform: translateX(20px);
-    }
-
-/* Contenido principal */
-.main-content {
-    margin-top: 0;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
+/* Asegurar que el modelo de caja se aplique a todo */
+* {
     box-sizing: border-box;
-}
-
-/* Modos de color */
-.dark-mode {
-    background-color: #2f2f2f;
-    color: white;
-}
-
-.light-mode {
-    background-color: #ffffff;
-    color: black;
 }
 
 /* Fondo fijo para la tabla */
@@ -176,7 +151,7 @@ input:checked + .slider {
 
 /* Estilos de la tabla */
 .table {
-    width: 100%;
+    width: %;
     border-collapse: collapse;
     border-radius: 8px;
     overflow: hidden;
@@ -384,7 +359,7 @@ input:checked + .slider {
 .dropdown-link {
     display: block;
     color: #333;
-    padding: 8px 16px;
+    padding: 6px 14px;
     text-decoration: none;
 }
 
@@ -396,3 +371,114 @@ input:checked + .slider {
 .nav-item.dropdown:hover .dropdown-menu {
     display: block;
 }
+/* RESPONSIVE: Ajustes para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+
+    .navbar {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .nav-link {
+        font-size: 0.95rem;
+        padding: 8px 10px;
+    }
+
+    .bottom-bar {
+        flex-direction: column;
+        padding: 10px 0;
+    }
+
+    .bottom-nav {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .logo {
+        width: 100px;
+        top: 10px;
+        left: 10px;
+    }
+
+    .navbar-header {
+        height: auto;
+        flex-direction: column;
+        padding: 15px;
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .search-form {
+        padding: 10px;
+    }
+
+        .search-form input,
+        .search-form button {
+            width: 100%;
+        }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .table {
+        font-size: 0.85rem;
+    }
+
+    .theme-switcher {
+        margin: 10px auto;
+        justify-content: center;
+    }
+}
+/* -----------------------------
+   Responsive Sidebar y Layout
+----------------------------- */
+body.sidebar-open {
+    overflow: hidden; /* Evita scroll horizontal cuando el menú está activo */
+}
+
+.sidebar {
+    width: 250px;
+    max-width: 80%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+/* Ajustar el contenido cuando la sidebar está activa */
+.main-content,
+.table-container {
+    transition: margin-left 0.3s ease;
+}
+
+body.sidebar-open .main-content,
+body.sidebar-open .table-container {
+    margin-left: 250px; /* El mismo ancho que la sidebar */
+}
+
+/* Para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 80%;
+    }
+
+    body.sidebar-open .main-content,
+    body.sidebar-open .table-container {
+        margin-left: 80%;
+    }
+
+    .navbar {
+        flex-direction: column;
+    }
+
+    .nav-link {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+}
+
+

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -77,6 +78,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
         }
 
         // Propiedad Nombre
+        [Required(ErrorMessage = "El campo Nombre no debe quedar vacio")]
         public string Nombre
         {
             get { return _nombre; }
@@ -86,9 +88,10 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             }
         }
 
-     
+
 
         // Propiedad PrecioTotal
+        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0")]
         public double PrecioTotal
         {
             get { return _precioTotal; }
@@ -100,6 +103,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
         }
 
         // Propiedad FechaExpiracion
+        [Required(ErrorMessage = "El campo Fecha Expiracion no debe quedar vacio")]
         public DateTime FechaExpiracion
         {
             get { return _fechaExpiracion; }

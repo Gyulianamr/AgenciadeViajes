@@ -17,11 +17,22 @@ namespace AgenciadeViajesDevExtremeMvC.Models
         [ForeignKey("IdCotizacion")]
         public virtual Cotizacion Cotizacion { get; set; }
 
+        [Required(ErrorMessage = "El campo Fecha Reservacion no debe quedar vacio")]
         public DateTime FechaReservacion { get; set; }
+
+        [Required(ErrorMessage = "El campo Estado no debe quedar vacio")]
         public string Estado { get; set; } // Ejemplo: Confirmada, Cancelada, En Proceso
+
+        [Required(ErrorMessage = "El campo Fecha Viaje no debe quedar vacio")]
         public DateTime FechaViaje { get; set; }
+
+        [Required(ErrorMessage = "El campo Fecha de regreso no debe quedar vacio")]
         public DateTime FechaRegreso { get; set; }
+
+        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad en monto pagado debe ser mayor a 0")]
         public double MontoPagado { get; set; }
+
+        [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad en saldo pendiente debe ser mayor a 0")]
         public double Saldopendiente { get; set; }
 
         // Constructor vacío

@@ -3,100 +3,182 @@
 }
 
 <style>
-    /* ============================
-       ESTILOS GENERALES
-       ============================ */
-
-    /* Eliminar márgenes y paddings globales */
     body {
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        background-color: #f9f9f9; /* Fondo claro para el resto de la página */
-        overflow-x: hidden; /* Evitar desplazamiento horizontal */
+        background-color: #f9f9f9;
+        overflow-x: hidden;
     }
 
-    /* Contenedor principal con la imagen de fondo */
     .home-overlay {
-        background: url('@Url.Content("~/Content/playa1.jpg")') no-repeat center center;
-        background-size: cover; /* Cubre un área específica del fondo */
-        background-position: center center; /* Centra la imagen */
-        height: 400px; /* Altura fija para evitar que ocupe toda la pantalla */
-        width: 100%; /* Asegura que ocupe todo el ancho de la pantalla */
-        display: flex;
-        justify-content: center; /* Centra el contenido horizontalmente */
-        align-items: center; /* Centra el contenido verticalmente */
-        text-align: center;
+        background-size: cover;
+        background-position: center center;
+        height: 63vh; /* Reducimos aún más la altura */
+        width: 90%; /* Mantenemos el ancho */
+        margin: 0 auto; /* Centrado horizontal */
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         box-sizing: border-box;
-        overflow: hidden; /* Evita desbordamientos */
+        overflow: hidden;
+        transition: background-image 1s ease-in-out;
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
 
-    /* Estilo para el título */
-    .home-overlay h1 {
-        font-size: clamp(2rem, 5vw, 3rem); /* Tamaño responsivo basado en el ancho de la pantalla */
+    /* Añadimos espacio entre el contenedor de fondo y el contenido inferior */
+    .overlay-content {
+        padding: 30px;
+        margin-bottom: 50px; /* Espacio hacia abajo */
+    }
+
+    /* Fondo solo para la información */
+    .overlay-content {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 90%;
+        z-index: 2;
+    }
+
+    .overlay-content h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
         color: white;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para legibilidad */
-        margin-bottom: 1rem; /* Espacio debajo del título */
+        margin-bottom: 1rem;
     }
 
-    /* Estilo para el párrafo */
-    .home-overlay p {
-        font-size: clamp(1rem, 3vw, 1.5rem); /* Tamaño responsivo basado en el ancho de la pantalla */
+    .overlay-content p {
+        font-size: clamp(1rem, 3vw, 1.5rem);
         color: white;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-        margin-bottom: 2rem; /* Espacio debajo del párrafo */
+        margin-bottom: 2rem;
     }
 
-    /* Estilo de los botones */
-    .home-overlay .btn {
+    .overlay-content .btn {
         font-weight: bold;
-        font-size: clamp(0.9rem, 2vw, 1.2rem); /* Tamaño responsivo basado en el ancho de la pantalla */
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
         padding: 10px 20px;
         border-radius: 25px;
-        transition: transform 0.3s ease, background-color 0.3s ease; /* Animación de los botones */
         text-decoration: none;
         color: white;
+        margin: 5px;
+        display: inline-block;
+        transition: transform 0.3s ease;
     }
 
-    /* Botones personalizados con tonos de verde */
-        .home-overlay .btn-success {
-            background-color: #388e3c; /* Verde claro */
-            border: none;
-        }
+    .btn-success {
+        background-color: #388e3c;
+    }
 
-    .home-overlay .btn-success-dark {
-        background-color: #388e3c; /* Verde más oscuro */
+    .btn-success-dark {
+        background-color: #2e7d32;
+    }
+
+    .btn-success-light {
+        background-color: #66bb6a;
+    }
+
+    .overlay-content .btn:hover {
+        transform: scale(1.05);
+        background-color: #87CEEB;
+    }
+
+    /* Botones de cambio de imagen */
+    .image-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 255, 255, 0.6);
         border: none;
+        font-size: 2rem; /* Tamaño del ícono */
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 3;
+        transition: background-color 0.3s;
+        display: flex; /* Para centrar el ícono dentro del botón */
+        align-items: center; /* Centrado vertical */
+        justify-content: center; /* Centrado horizontal */
     }
 
-        .home-overlay .btn-success-light {
-            background-color: #388e3c; /* Verde más suave */
-            border: none;
+        .image-button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
         }
 
-    /* Efecto al pasar el mouse por los botones */
-    .home-overlay .btn:hover {
-        transform: scale(1.05); /* Efecto de aumento */
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra cuando se pasa el mouse */
-        background-color: #87CEEB; /* Azul cielo cuando el mouse pasa por encima */
+    .prev-button {
+        left: 20px;
+    }
+
+    .next-button {
+        right: 20px;
     }
 </style>
 
-<!-- Contenido sobre la imagen de fondo -->
 <div class="home-overlay">
-    <div>
+    <!-- Botones en esquinas -->
+    <!-- Botón de flecha izquierda -->
+    <button class="image-button prev-button" onclick="anteriorImagen()">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <!-- Botón de flecha derecha -->
+    <button class="image-button next-button" onclick="siguienteImagen()">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <!-- Contenido con fondo semitransparente -->
+    <div class="overlay-content">
         <h1 class="display-4">¡Bienvenido!</h1>
-        <p class="lead">
-            Maneja las Gestiones con Facilidad
-        </p>
+        <p class="lead">Maneja las Gestiones con Facilidad</p>
 
         <div class="mt-4">
-            <a href="@Url.Action("Paquete", "Home")" class="btn btn-success m-2">Paquetes</a>
-            <a href="@Url.Action("Reserva", "Home")" class="btn btn-success-dark m-2">Reservas</a>
-            <a href="@Url.Action("Cotizacion", "Home")" class="btn btn-success-light m-2">Cotizaciones</a>
-            <a href="@Url.Action("Cliente", "Home")" class="btn btn-success-dark m-2">Clientes</a>
-            <a href="@Url.Action("Factura", "Home")" class="btn btn-success-light m-2">Facturas</a>
+            <a href="@Url.Action("Paquete", "Home")" class="btn btn-success">Paquetes</a>
+            <a href="@Url.Action("Reserva", "Home")" class="btn btn-success-dark">Reservas</a>
+            <a href="@Url.Action("Cotizacion", "Home")" class="btn btn-success-light">Cotizaciones</a>
+            <a href="@Url.Action("Cliente", "Home")" class="btn btn-success-dark">Clientes</a>
+            <a href="@Url.Action("Factura", "Home")" class="btn btn-success-light">Facturas</a>
         </div>
     </div>
 </div>
+
+<script>
+    const images = [
+        '@Url.Content("~/Content/playa1.jpg")',
+        '@Url.Content("~/Content/medellin.jpg")',
+        '@Url.Content("~/Content/Viaje.jpg")',
+        '@Url.Content("~/Content/venecia.jpg")',
+        '@Url.Content("~/Content/canada.jpg")'
+    ];
+
+    let index = 0;
+    let intervalo;
+
+    function mostrarImagen() {
+        const contenedor = document.querySelector('.home-overlay');
+        contenedor.style.backgroundImage = `url('${images[index]}')`;
+    }
+
+    function siguienteImagen() {
+        index = (index + 1) % images.length;
+        mostrarImagen();
+        reiniciarIntervalo();
+    }
+
+    function anteriorImagen() {
+        index = (index - 1 + images.length) % images.length;
+        mostrarImagen();
+        reiniciarIntervalo();
+    }
+
+    function reiniciarIntervalo() {
+        clearInterval(intervalo);
+        intervalo = setInterval(siguienteImagen, 5000);
+    }
+
+    window.onload = () => {
+        mostrarImagen();
+        intervalo = setInterval(siguienteImagen, 5000);
+    };
+</script>
