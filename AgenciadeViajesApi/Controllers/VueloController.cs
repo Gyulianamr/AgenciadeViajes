@@ -142,7 +142,8 @@ namespace AgenciadeViajesApi.Controllers
                 return BadRequest("Destino no válido");
             }
 
-            // Actualizar propiedades
+            vueloExistente.OrigenId = vuelo.OrigenId;
+            vueloExistente.DestinoId = vuelo.DestinoId;
             vueloExistente.Nombre = vuelo.Nombre;
             vueloExistente.Tipo = vuelo.Tipo;
             vueloExistente.Compañia = vuelo.Compañia;
@@ -150,13 +151,12 @@ namespace AgenciadeViajesApi.Controllers
             vueloExistente.HoraLlegada = vuelo.HoraLlegada;
             vueloExistente.Capacidad = vuelo.Capacidad;
             vueloExistente.Precio = vuelo.Precio;
-            vueloExistente.OrigenId = vuelo.OrigenId;
-            vueloExistente.DestinoId = vuelo.DestinoId;
 
             db.SaveChanges();
 
             return Ok(vueloExistente);
         }
+
 
         // DELETE: api/Transporte/5
         /// <summary>
