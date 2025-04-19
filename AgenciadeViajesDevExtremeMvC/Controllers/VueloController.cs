@@ -81,13 +81,13 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
 
             // Obtener los datos del Destino
             var urlDestino = "https://localhost:44321/api/Destino/" + vuelo.DestinoId;
-            var respuestaDestino = await GetAsync(urlDestino);
+            var respuestaDestino = await GetAsync(apiUrl);
             Destino destino = JsonConvert.DeserializeObject<Destino>(respuestaDestino);
             vuelo.Destino = destino;
 
             // Obtener los datos del Origen
             var urlOrigen = "https://localhost:44321/api/Destino/" + vuelo.OrigenId;
-            var respuestaOrigen = await GetAsync(urlOrigen);
+            var respuestaOrigen = await GetAsync(apiUrl);
             Destino origen = JsonConvert.DeserializeObject<Destino>(respuestaOrigen);
             vuelo.Origen = origen;
 
@@ -114,6 +114,10 @@ namespace AgenciadeViajesDevExtremeMvC.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+   
+
+
 
         [HttpDelete]
         public async Task<HttpResponseMessage> Delete(FormDataCollection form)

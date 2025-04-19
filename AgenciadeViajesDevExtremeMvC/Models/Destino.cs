@@ -105,12 +105,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             get { return _moneda; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("La moneda es requerida");
-
-                if (value.Length != 3)
-                    throw new ArgumentException("La moneda debe ser un código de 3 caracteres");
-
+         
                 _moneda = value;
             }
         }
