@@ -28,16 +28,17 @@
     <!-- Banner superior con logo -->
     <div class="navbar-header">
         <img src="~/Content/Captura_de_pantalla_2025-04-18_110549-removebg-preview.png" alt="Logo Agencia de Viajes" style="width: 150px; height: auto;">
-        <span>Transacciones Agencia de Viajes</span>
+        <span>Transacciones de Agencia de Viajes</span>
     </div>
 
 
 
     <!-- Menú horizontal -->
     <nav class="navbar">
-        <button class="menu-toggle">
+        <button class="menu-toggle" title="Men&uacute;">
             <i class="fas fa-bars" style="color: blue; font-size: 24px;"></i>
         </button>
+
         <ul class="navbar-nav mx-auto" style="display: flex; gap: 20px; align-items: center;">
             <li class="nav-item">
                 <a href="@Url.Action("Index", "Home")" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
@@ -114,7 +115,7 @@
     <!-- Menú lateral oculto -->
     <aside class="sidebar" id="sidebar">
         <button class="close-menu">X</button>
-        <h3>Servicios incluidos</h3>
+        <h3>Gesti&oacute;n de Servicios</h3>
         <ul class="sidebar-nav">
             <li>
                 <a href="@Url.Action("Hotel", "Home")" class="nav-link">
@@ -169,7 +170,8 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Agencia de Viajes</p>
+        <p>&copy; 2025 <strong>Agencia de Viajes</strong> <i class="fas fa-plane"></i> Todos los derechos reservados.</p>
+
     </footer>
 
     <!-- Script para el menú -->
