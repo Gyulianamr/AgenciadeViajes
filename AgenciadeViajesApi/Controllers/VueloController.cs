@@ -53,23 +53,7 @@ namespace AgenciadeViajesApi.Controllers
         /// </summary>
         public IHttpActionResult GetVuelo(int id)
         {
-            var vuelo = from v in db.Vuelos
-                        join origen in db.Destinos on v.OrigenId equals origen.Id
-                        join destino in db.Destinos on v.DestinoId equals destino.Id
-                        select new
-                        {
-                            v.Id,
-                            v.Nombre,
-                            v.Tipo,
-                            v.Compañia,
-                            v.HoraSalida,
-                            v.HoraLlegada,
-                            v.Capacidad,
-                            v.Precio,
-                            OrigenNombre = origen.NomDestino,
-                            DestinoNombre = destino.NomDestino
-                        };
-
+            var vuelo = db.Vuelos.FirstOrDefault(v => v.Id == id);
             if (vuelo == null)
             {
                 return NotFound();
