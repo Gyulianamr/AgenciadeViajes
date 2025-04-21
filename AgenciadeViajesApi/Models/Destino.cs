@@ -43,12 +43,6 @@ namespace AgenciadeViajesApi.Models
             get { return _nomdestino; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El nombre del destino es requerido");
-
-                if (value.Length < 3 || value.Length > 100)
-                    throw new ArgumentException("El nombre debe tener entre 3 y 100 caracteres");
-
                 _nomdestino = value;
             }
         }
@@ -58,12 +52,7 @@ namespace AgenciadeViajesApi.Models
             get { return _pais; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El país es requerido");
-
-                if (value.Length < 3 || value.Length > 50)
-                    throw new ArgumentException("El país debe tener entre 3 y 50 caracteres");
-
+            
                 _pais = value;
             }
         }
@@ -73,8 +62,7 @@ namespace AgenciadeViajesApi.Models
             get { return _descrip; }
             set
             {
-                if (value?.Length > 500)
-                    throw new ArgumentException("La descripción no puede exceder 500 caracteres");
+               
                 _descrip = value;
             }
         }
@@ -84,12 +72,7 @@ namespace AgenciadeViajesApi.Models
             get { return _tipo; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El tipo de destino es requerido");
-
-                if (value.Length > 50)
-                    throw new ArgumentException("El tipo no puede exceder 50 caracteres");
-
+                
                 _tipo = value;
             }
         }

@@ -9,10 +9,7 @@ namespace AgenciadeViajesApi.Models
 {
     public class Vuelo
     {
-        private int _idVuelo;
         private string _tipo;
-        private Destino _origen;
-        private Destino _destino;
         private string _compañia;
         private TimeSpan _horaSalida;
         private TimeSpan _horaLlegada;
