@@ -31,9 +31,38 @@
 
         columns.AddFor(m => m.RequiereVisa);
     })
-    .Editing(e => e
+         .Editing(e => e
+        .Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
         .AllowDeleting(true)
     )
+    .Paging(p => p.PageSize(8))
+    .SearchPanel(s => s.Visible(true).Width(280))
+   .Export(e => e
+    .Enabled(true)
+    .AllowExportSelectedData(false) // o true si querés solo lo seleccionado
 )
+
+    .HeaderFilter(f => f.Visible(true))
+    .OnExporting("onExportingHandler")
+)
+
+<script>
+    function onExportingHandler(e) {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Destino');
+
+        DevExpress.excelExporter.exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true
+        }).then(function () {
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                saveAs(new Blob([buffer], { type: "application/octet-stream" }), "Destino.xlsx");
+            });
+        });
+
+        e.cancel = true;
+    }
+</script>

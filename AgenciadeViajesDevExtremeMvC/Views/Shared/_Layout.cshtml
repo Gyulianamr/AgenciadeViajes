@@ -15,9 +15,11 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="~/Content/estilo11.css" rel="stylesheet" />
 
+
     @Styles.Render("~/Content/DevExtremeBundle")
     @Scripts.Render("~/Scripts/bundle")
     @Scripts.Render("~/Scripts/DevExtremeBundle")
+
 </head>
 
 <body class="light-mode">
@@ -26,16 +28,17 @@
     <!-- Banner superior con logo -->
     <div class="navbar-header">
         <img src="~/Content/Captura_de_pantalla_2025-04-18_110549-removebg-preview.png" alt="Logo Agencia de Viajes" style="width: 150px; height: auto;">
-        <span>Transacciones Agencia de Viajes</span>
+        <span>Transacciones de Agencia de Viajes</span>
     </div>
 
 
 
     <!-- Menú horizontal -->
     <nav class="navbar">
-        <button class="menu-toggle">
+        <button class="menu-toggle" title="Men&uacute;">
             <i class="fas fa-bars" style="color: blue; font-size: 24px;"></i>
         </button>
+
         <ul class="navbar-nav mx-auto" style="display: flex; gap: 20px; align-items: center;">
             <li class="nav-item">
                 <a href="@Url.Action("Index", "Home")" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
@@ -112,7 +115,7 @@
     <!-- Menú lateral oculto -->
     <aside class="sidebar" id="sidebar">
         <button class="close-menu">X</button>
-        <h3>Servicios incluidos</h3>
+        <h3>Gesti&oacute;n de Servicios</h3>
         <ul class="sidebar-nav">
             <li>
                 <a href="@Url.Action("Hotel", "Home")" class="nav-link">
@@ -167,23 +170,66 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Agencia de Viajes</p>
+        <p>&copy; 2025 <strong>Agencia de Viajes</strong> <i class="fas fa-plane"></i> Todos los derechos reservados.</p>
+
     </footer>
 
     <!-- Script para el menú -->
- 
+
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggleButton = document.querySelector('.menu-toggle');
-            const sidebar = document.querySelector('.sidebar');
+        // Mostrar el menú
+        document.querySelector('.menu-toggle').addEventListener('click', function () {
+            document.getElementById('sidebar').classList.add('active');
+        });
 
-            toggleButton.addEventListener('click', function () {
-                sidebar.classList.toggle('active');
-                document.body.classList.toggle('sidebar-open');
-            });
+        // Cerrar el menú
+        document.querySelector('.close-menu').addEventListener('click', function () {
+            document.getElementById('sidebar').classList.remove('active');
         });
     </script>
+
+
+    <script src="https://cdn3.devexpress.com/jslib/23.2.5/js/exceljs.min.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/23.2.5/js/FileSaver.min.js"></script>
+    <script>
+        // Esperar a que todos los elementos estén listos
+        $(document).ready(function () {
+            // Este script se ejecutará para todos los DataGrid en la página
+            $(".dx-datagrid").each(function () {
+                const gridElement = $(this).dxDataGrid("instance");
+
+                if (gridElement) {
+                    const exportButton = $("<div>")
+                        .dxButton({
+                            icon: "exportxlsx",
+                            text: "Exportar Excel",
+                            onClick: function () {
+                                DevExpress.excelExporter.exportDataGrid({
+                                    component: gridElement,
+                                    worksheet: workbook.addWorksheet("Datos"),
+                                    autoFilterEnabled: true
+                                }).then(() => {
+                                    workbook.xlsx.writeBuffer().then((buffer) => {
+                                        const blob = new Blob([buffer], { type: "application/octet-stream" });
+                                        saveAs(blob, "DatosExportados.xlsx");
+                                    });
+                                });
+                            }
+                        });
+
+                    // Agregar el botón al DOM, arriba del grid
+                    $(this).before(exportButton);
+                }
+            });
+        });
+
+        // Incluir FileSaver.js si no lo tenés
+    </script>
+
+    <!-- CDN de FileSaver.js (necesario para guardar el Excel) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
 
 
 </body>

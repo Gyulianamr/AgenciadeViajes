@@ -34,18 +34,55 @@
         columns.AddFor(m => m.HoraSalida);
 
         columns.AddFor(m => m.Salario);
+        columns.Add()
+            .Type(GridCommandColumnType.Buttons)
+            .Buttons(buttons =>
+            {
+                buttons.Add()
+                    .Name(GridColumnButtonName.Edit)
+                    .Icon("edit")
+                    .Hint("Editar");
+
+                buttons.Add()
+                    .Name(GridColumnButtonName.Delete)
+                    .Icon("trash")
+                    .Hint("Eliminar");
+            });
 
 
     })
-    .Editing(e => e
+       .Editing(e => e
+        .Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
         .AllowDeleting(true)
     )
-
-        .Paging(p => p.PageSize(10))
-.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 5, 10, 20 }))
-.FilterRow(f => f.Visible(true))
-.SearchPanel(s => s.Visible(true).Width(240))
-
+    .Paging(p => p.PageSize(8))
+    .SearchPanel(s => s.Visible(true).Width(280))
+   .Export(e => e
+    .Enabled(true)
+    .AllowExportSelectedData(false) // o true si querés solo lo seleccionado
 )
+
+    .HeaderFilter(f => f.Visible(true))
+    .OnExporting("onExportingHandler")
+)
+
+<script>
+    function onExportingHandler(e) {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('AgentedeViaje');
+
+        DevExpress.excelExporter.exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true
+        }).then(function () {
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                saveAs(new Blob([buffer], { type: "application/octet-stream" }), "AgentedeViaje.xlsx");
+            });
+        });
+
+        e.cancel = true;
+    }
+</script>

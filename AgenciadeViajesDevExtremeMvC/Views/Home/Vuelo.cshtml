@@ -16,6 +16,13 @@
     )
     .RemoteOperations(true)
     .Columns(columns => {
+        columns.AddFor(m => m.Id);
+
+        columns.AddFor(m => m.Nombre);
+
+        columns.AddFor(m => m.Tipo);
+
+        columns.AddFor(m => m.Compañia);
 
         columns.AddFor(m => m.OrigenId).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Destino").LoadAction("Get").Key("Id"))
@@ -29,13 +36,7 @@
             .DisplayExpr("NomDestino")
         );
 
-        columns.AddFor(m => m.Id);
 
-        columns.AddFor(m => m.Nombre);
-
-        columns.AddFor(m => m.Tipo);
-
-        columns.AddFor(m => m.Compañia);
 
         columns.AddFor(m => m.HoraSalida);
 
@@ -45,13 +46,38 @@
 
         columns.AddFor(m => m.Precio);
     })
-    .Editing(e => e
+     .Editing(e => e
+        .Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
         .AllowDeleting(true)
     )
-            .Paging(p => p.PageSize(10))
-.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 5, 10, 20 }))
-.FilterRow(f => f.Visible(true))
-.SearchPanel(s => s.Visible(true).Width(240))
+    .Paging(p => p.PageSize(8))
+    .SearchPanel(s => s.Visible(true).Width(280))
+   .Export(e => e
+    .Enabled(true)
+    .AllowExportSelectedData(false) // o true si querés solo lo seleccionado
 )
+
+    .HeaderFilter(f => f.Visible(true))
+    .OnExporting("onExportingHandler")
+)
+
+<script>
+    function onExportingHandler(e) {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Vuelos');
+
+        DevExpress.excelExporter.exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true
+        }).then(function () {
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                saveAs(new Blob([buffer], { type: "application/octet-stream" }), "Vuelos.xlsx");
+            });
+        });
+
+        e.cancel = true;
+    }
+</script>

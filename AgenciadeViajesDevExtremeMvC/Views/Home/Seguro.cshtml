@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Gesti&oacute;n de Seguros</h2>
+<h2>Gestión de Seguros</h2>
 
 @(Html.DevExtreme().DataGrid<AgenciadeViajesDevExtremeMvC.Models.Seguro>()
     .DataSource(ds => ds.WebApi()
@@ -30,13 +30,45 @@
         columns.AddFor(m => m.Precio);
     })
     .Editing(e => e
+        .Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
         .AllowDeleting(true)
     )
-            .Paging(p => p.PageSize(10))
-.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 5, 10, 20 }))
-.FilterRow(f => f.Visible(true))
-.SearchPanel(s => s.Visible(true).Width(240))
-
+    .Paging(p => p.PageSize(8))
+    .SearchPanel(s => s.Visible(true).Width(280))
+    .Export(e => e
+        .Enabled(true)
+        .AllowExportSelectedData(false)  // Puedes cambiar a 'true' si quieres exportar solo lo seleccionado
+    )
+    .HeaderFilter(f => f.Visible(true))
+    .OnExporting("onExportingHandler")
 )
+<!-- Librerías necesarias para exportar -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<script>
+    // Función para exportar
+    function onExportingHandler(e) {
+        // Crear un nuevo libro de Excel
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Seguro');
+
+        // Usar el exportador de DevExtreme
+        DevExpress.excelExporter.exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true  // Activar filtro automático
+        }).then(function () {
+            // Escribir el buffer del archivo Excel y guardarlo
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                const blob = new Blob([buffer], { type: "application/octet-stream" });
+                saveAs(blob, "Seguro.xlsx");  // Asegúrate de que el archivo tenga la extensión .xlsx
+            });
+        });
+
+        // Cancelar la acción de exportación por defecto (la que usa DevExtreme internamente)
+        e.cancel = true;
+    }
+</script>
