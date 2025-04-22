@@ -43,11 +43,7 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             get { return _nombre; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El nombre no puede estar vacío");
-
-                if (value.Length < 2 || value.Length > 50)
-                    throw new ArgumentException("El nombre debe tener entre 2 y 50 caracteres");
+                
 
                 _nombre = value;
             }
@@ -83,11 +79,6 @@ namespace AgenciadeViajesDevExtremeMvC.Models
             get { return _correo; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("El correo electrónico no puede estar vacío");
-
-                if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                    throw new ArgumentException("Formato de correo electrónico no válido");
 
                 _correo = value;
             }

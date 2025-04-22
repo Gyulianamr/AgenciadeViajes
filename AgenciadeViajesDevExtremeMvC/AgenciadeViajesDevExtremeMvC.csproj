@@ -261,7 +261,7 @@
     <Content Include="Scripts\globalize\message.min.js" />
     <Content Include="Scripts\globalize\number.js" />
     <Content Include="Scripts\globalize\number.min.js" />
-    <Content Include="Content\ManualdeUsuario.pdf" />
+    <Content Include="Content\ManualdUsuario[1].pdf" />
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />
     <Content Include="Scripts\jquery-3.6.3.min.js" />

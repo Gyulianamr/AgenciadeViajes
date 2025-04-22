@@ -65,6 +65,21 @@
 
 
         columns.AddFor(m => m.Estado);
+
+        columns.Add()
+    .Type(GridCommandColumnType.Buttons)
+    .Buttons(buttons =>
+    {
+        buttons.Add()
+            .Name(GridColumnButtonName.Edit)
+            .Icon("edit")
+            .Hint("Editar");
+
+        buttons.Add()
+            .Name(GridColumnButtonName.Delete)
+            .Icon("trash")
+            .Hint("Eliminar");
+    });
     })
          .Editing(e => e
         .Mode(GridEditMode.Popup)
