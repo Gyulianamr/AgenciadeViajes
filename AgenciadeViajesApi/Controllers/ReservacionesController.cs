@@ -26,7 +26,8 @@ namespace AgenciadeViajesApi.Controllers
                          {
                              Id = reserva.Id,
                              IdCotizacion = cotizacion.Id,
-                             Nombre =cliente.Nombre,
+                             ClienteId= cliente.Id,
+                             Nombre =cliente.Nombre +" "+ cliente.Apellido,
                              FechaReservacion = reserva.FechaReservacion,
                              Estado = reserva.Estado,
                              FechaViaje = reserva.FechaViaje,
@@ -40,7 +41,6 @@ namespace AgenciadeViajesApi.Controllers
 
         }
 
-
         /// <summary>
         /// Obtiene una reservación por su ID.
         /// </summary>
@@ -48,20 +48,22 @@ namespace AgenciadeViajesApi.Controllers
         /// <returns>Reservación correspondiente al ID</returns>
         public IHttpActionResult Get(int id)
         {
-            var reservacion = db.Reservas
-                                .Where(R => R.Id == id)
-                                .Select(R => new
-                                {
-                                    R.Id,
-                                    CotizacionId = R.Cotizacion.Id,
-                                    FechaReservacion = R.FechaReservacion,
-                                    Estado = R.Estado,
-                                    FechaViaje = R.FechaViaje,
-                                    FechaRegreso = R.FechaRegreso,
-                                    MontoPagado = R.MontoPagado,
-                                    SaldoPendiente = R.Saldopendiente
-                                })
-                                .FirstOrDefault();
+            var reservacion = (from reserva in db.Reservas
+                               join cotizacion in db.Cotizaciones on reserva.IdCotizacion equals cotizacion.Id
+                               join cliente in db.Clientes on cotizacion.ClienteId equals cliente.Id
+                               where reserva.Id == id
+                               select new
+                               {
+                                   Id = reserva.Id,
+                                   IdCotizacion = cotizacion.Id,
+                                   Nombre = cliente.Nombre + " " + cliente.Apellido,
+                                   FechaReservacion = reserva.FechaReservacion,
+                                   Estado = reserva.Estado,
+                                   FechaViaje = reserva.FechaViaje,
+                                   FechaRegreso = reserva.FechaRegreso,
+                                   MontoPagado = reserva.MontoPagado,
+                                   Saldopendiente = cotizacion.CostoTotal - reserva.MontoPagado
+                               }).FirstOrDefault();
 
             if (reservacion == null)
             {
@@ -70,6 +72,7 @@ namespace AgenciadeViajesApi.Controllers
 
             return Ok(reservacion);
         }
+
 
         /// <summary>
         /// Crea una nueva reservación.
