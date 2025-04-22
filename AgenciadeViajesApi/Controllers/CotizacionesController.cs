@@ -25,22 +25,23 @@ namespace AgenciadeViajesApi.Controllers
         /// <returns>Lista de cotizaciones</returns>
         public IHttpActionResult Get()
         {
-            var result = from cotizacion in db.Cotizaciones
-                         join cliente in db.Clientes on cotizacion.ClienteId equals cliente.Id
-                         join agente in db.AgenteViajes on cotizacion.AgenteResponsableId equals agente.Id
-                         join paquete in db.PaqueteTuristicos on cotizacion.PaqueteId equals paquete.Id
-                         select new
-                         {
-                             Id = cotizacion.Id,
-                             ClienteId = cliente.Id,
-                             Nombre = cliente.Nombre,
-                             AgenteResponsableId = agente.Id,
-                             PaqueteId = paquete.Id,
-                             CantidadPersonas = cotizacion.CantidadPersonas,
-                             FechaCotizacion = cotizacion.FechaCotizacion,
-                             CostoTotal = cotizacion.CostoTotal
-
-                         };
+            var result = from c in db.Cotizaciones
+                             join cliente in db.Clientes on c.ClienteId equals cliente.Id
+                             join agente in db.AgenteViajes on c.AgenteResponsableId equals agente.Id
+                             join paquete in db.PaqueteTuristicos on c.PaqueteId equals paquete.Id
+                             select new
+                             {
+                                 Id = c.Id,
+                                 ClienteId = c.ClienteId,
+                                 ClienteNombre = cliente.Nombre,
+                                 AgenteResponsableId = c.AgenteResponsableId,
+                                 AgenteNombre = agente.Nombre,
+                                 PaqueteId = c.PaqueteId,
+                                 PaqueteNombre = paquete.Nombre,
+                                 CantidadPersonas = c.CantidadPersonas,
+                                 FechaCotizacion = c.FechaCotizacion,
+                                 CostoTotal = c.CostoTotal
+                             };
 
             if (!result.Any())
             {
@@ -50,6 +51,16 @@ namespace AgenciadeViajesApi.Controllers
             return Ok(result);
         }
 
+
+
+
+
+        // GET: api/Cotizaciones/5
+        /// <summary>
+        /// Obtiene una cotización por su ID.
+        /// </summary>
+        /// <param name="id">ID de la cotización</param>
+        /// <returns>Cotización correspondiente al ID</returns>
 
         // GET: api/Cotizaciones/5
         /// <summary>
@@ -118,7 +129,7 @@ namespace AgenciadeViajesApi.Controllers
             }
             cotizacion.Paquete = paquete;
             // cotizacionExistente.CostoTotal = cotizacionExistente.Paquete.PrecioTotal*cotizacionExistente.CantidadPersonas;
-            cotizacion.CostoTotal = cotizacion.Paquete.PrecioTotal*cotizacion.CantidadPersonas;
+            cotizacion.CostoTotal = cotizacion.Paquete.PrecioTotal * cotizacion.CantidadPersonas;
             cotizacion.FechaCotizacion = DateTime.Now;
 
             db.Cotizaciones.Add(cotizacion);
@@ -170,7 +181,7 @@ namespace AgenciadeViajesApi.Controllers
             cotizacionExistente.PaqueteId = cotizacion.PaqueteId;
             cotizacionExistente.CantidadPersonas = cotizacion.CantidadPersonas;
             cotizacionExistente.FechaCotizacion = DateTime.Now;
-            cotizacionExistente.CostoTotal = cotizacionExistente.Paquete.PrecioTotal*cotizacionExistente.CantidadPersonas;
+            cotizacionExistente.CostoTotal = cotizacionExistente.Paquete.PrecioTotal * cotizacionExistente.CantidadPersonas;
 
             db.SaveChanges();
 
