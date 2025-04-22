@@ -102,7 +102,7 @@ h2, h3, h4, h5, h6 {
     left: 0;
     height: 100vh; /* Altura completa de la pantalla */
     width: 15%; /* Ancho del menú lateral */
-    background-color:blanchedalmond; /* Fondo blanco */
+    background-color:white; /* Fondo blanco */
     padding: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
     z-index: 999; /* Asegurar que esté encima de otros elementos */

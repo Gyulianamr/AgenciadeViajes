@@ -13,16 +13,28 @@
         .UpdateAction("Put")
         .DeleteAction("Delete")
         .Key("Id")
+
+
     )
     .RemoteOperations(true)
     .Columns(columns => {
 
         columns.AddFor(m => m.Id);
-        columns.AddFor(m => m.IdCotizacion).Lookup(lookup => lookup
-                    .DataSource(ds => ds.WebApi().Controller("Cotizacion").LoadAction("Get").Key("Id"))
-                    .ValueExpr("Id")
-                    .DisplayExpr("Id") // Muestra el nombre del cliente desde la cotización
-                );
+
+
+
+
+
+        columns.AddFor(m => m.IdCotizacion)
+
+            .Lookup(lookup => lookup
+                .DataSource(ds => ds.WebApi()
+                    .Controller("Cotizacion") // Controlador de la API
+                    .LoadAction("Get")        // Acción que devuelve las cotizaciones
+                    .Key("Id"))               // Clave única de las cotizaciones
+                .ValueExpr("Id")              // Valor que se almacenará en la columna (ID de la cotización)
+                .DisplayExpr("Id")); // Texto mostrado (nombre del cliente)
+
 
 
 
@@ -33,10 +45,36 @@
         columns.AddFor(m => m.FechaViaje);
 
         columns.AddFor(m => m.FechaRegreso);
+        columns.AddFor(m => m.IdCotizacion)
+.Caption("Precio")
+.AllowEditing(false) // Deshabilita la edición de esta columna
+.Lookup(lookup => lookup
+.DataSource(ds => ds.WebApi()
+    .Controller("Cotizacion") // Controlador que devuelve los clientes
+    .LoadAction("Get")     // Acción que devuelve los datos de los clientes
+    .Key("Id"))            // Clave primaria del cliente
+.ValueExpr("Id")           // Valor que se almacenará en la columna (ID del cliente)
+.DisplayExpr("CostoTotal")); // Concatenación
+
 
         columns.AddFor(m => m.MontoPagado);
 
         columns.AddFor(m => m.Saldopendiente);
+
+        columns.Add()
+            .Type(GridCommandColumnType.Buttons)
+            .Buttons(buttons =>
+            {
+                buttons.Add()
+                    .Name(GridColumnButtonName.Edit)
+                    .Icon("edit")
+                    .Hint("Editar");
+
+                buttons.Add()
+                    .Name(GridColumnButtonName.Delete)
+                    .Icon("trash")
+                    .Hint("Eliminar");
+            });
     })
              .Editing(e => e
         .Mode(GridEditMode.Popup)

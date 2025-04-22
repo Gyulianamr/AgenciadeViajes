@@ -19,19 +19,41 @@
     .RemoteOperations(true)
     .Columns(columns => {
 
-        columns.AddFor(m => m.Id);
+    columns.AddFor(m => m.Id);
 
-        columns.AddFor(m => m.ClienteId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Cliente").LoadAction("Get").Key("Id"))
-            .ValueExpr("Id")
-            .DisplayExpr("Nombre")
+    columns.AddFor(m => m.ClienteId)
+.Lookup(lookup => lookup
+    .DataSource(ds => ds.WebApi()
+        .Controller("Cliente")
+        .LoadAction("Get")
+        .Key("Id"))
+    .ValueExpr("Id")
+    .DisplayExpr("Id"));
+
+    columns.AddFor(m => m.ClienteId)
+        .Caption("NombreCliente")
+.AllowEditing(false)
+.Lookup(lookup => lookup
+.DataSource(ds => ds.WebApi()
+.Controller("Cliente")
+.LoadAction("Get")
+.Key("Id"))
+.ValueExpr("Id")
+.DisplayExpr(new JS("function(item) { return item.Nombre + ' ' + item.Apellido; }")));
+
+    columns.AddFor(m => m.AgenteResponsableId).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("AgentedeViaje").LoadAction("Get").Key("Id"))
+        .ValueExpr("Id")
+        .DisplayExpr("Id")
         );
 
-        columns.AddFor(m => m.AgenteResponsableId).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("AgentedeViaje").LoadAction("Get").Key("Id"))
-            .ValueExpr("Id")
-            .DisplayExpr("Nombre")
-        );
+        columns.AddFor(m => m.AgenteResponsableId)
+        .Caption("AgenteNombre")
+.AllowEditing(false).Lookup(lookup => lookup
+    .DataSource(ds => ds.WebApi().Controller("AgentedeViaje").LoadAction("Get").Key("Id"))
+    .ValueExpr("Id")
+    .DisplayExpr(new JS("function(item) { return item.Nombre + ' ' + item.Apellido; }"))
+);
 
         columns.AddFor(m => m.PaqueteId).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Paquete_Turistico").LoadAction("Get").Key("Id"))
@@ -44,6 +66,21 @@
         columns.AddFor(m => m.FechaCotizacion);
 
         columns.AddFor(m => m.CostoTotal);
+
+        columns.Add()
+            .Type(GridCommandColumnType.Buttons)
+            .Buttons(buttons =>
+            {
+                buttons.Add()
+                    .Name(GridColumnButtonName.Edit)
+                    .Icon("edit")
+                    .Hint("Editar");
+
+                buttons.Add()
+                    .Name(GridColumnButtonName.Delete)
+                    .Icon("trash")
+                    .Hint("Eliminar");
+            });
     })
              .Editing(e => e
         .Mode(GridEditMode.Popup)

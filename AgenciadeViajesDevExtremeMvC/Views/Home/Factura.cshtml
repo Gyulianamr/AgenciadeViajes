@@ -22,23 +22,52 @@
         columns.AddFor(m => m.ReservacionId).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Reservacion").LoadAction("Get").Key("Id"))
             .ValueExpr("Id")
-            .DisplayExpr("FechaReservacion")
+            .DisplayExpr("Id")
         );
 
         columns.AddFor(m => m.FechaPago);
         columns.AddFor(m => m.MetodoPagoId).Lookup(lookup => lookup
-    .DataSource(ds => ds.WebApi().Controller("MetodoPago").LoadAction("Get").Key("Id"))
-    .ValueExpr("Id")
-    .DisplayExpr("Nombre")
-);
+            .DataSource(ds => ds.WebApi().Controller("MetodoPago").LoadAction("Get").Key("Id"))
+            .ValueExpr("Id")
+            .DisplayExpr("Nombre")
+        );
+        columns.AddFor(m => m.ReservacionId)
+            .Caption("Total_Pagar")
+            .AllowEditing(false)
+            .Lookup(lookup => lookup
+                .DataSource(ds => ds.WebApi()
+                    .Controller("Reservacion")
+                    .LoadAction("Get")
+                    .Key("Id"))
+                .ValueExpr("Id")
+                .DisplayExpr("Saldopendiente"));
 
         columns.AddFor(m => m.MontoPagado);
-
-
-
         columns.AddFor(m => m.Estado);
+
+        // Columna de comandos con botones personalizados
+        columns.Add()
+            .Type(GridCommandColumnType.Buttons)
+            .Buttons(buttons =>
+            {
+                buttons.Add() // Botón Editar con ícono personalizado
+                    .Name("edit")
+                    .Icon("edit") // Ícono de editar
+                    .Hint("Editar Factura");
+
+                buttons.Add() // Botón Eliminar con ícono personalizado
+                    .Name("delete")
+                    .Icon("trash") // Ícono de eliminar
+                    .Hint("Eliminar Factura");
+
+                buttons.Add() // Botón Imprimir con ícono personalizado
+                    .Icon("print") // Ícono de impresora
+                    .Hint("Imprimir Factura")
+                    .OnClick("imprimirFila");
+            })
+            .Width(150); // Ajusta el ancho según sea necesario
     })
-               .Editing(e => e
+    .Editing(e => e
         .Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
@@ -46,15 +75,13 @@
     )
     .Paging(p => p.PageSize(8))
     .SearchPanel(s => s.Visible(true).Width(280))
-   .Export(e => e
-    .Enabled(true)
-    .AllowExportSelectedData(false) // o true si querés solo lo seleccionado
-)
-
+    .Export(e => e
+        .Enabled(true)
+        .AllowExportSelectedData(false)
+    )
     .HeaderFilter(f => f.Visible(true))
     .OnExporting("onExportingHandler")
 )
-
 <script>
     function onExportingHandler(e) {
         const workbook = new ExcelJS.Workbook();
@@ -71,6 +98,50 @@
         });
 
         e.cancel = true;
+    }
+
+    function imprimirFila(e) {
+        // Obtener los datos de la fila seleccionada
+        const rowData = e.row.data;
+
+        // Crear una nueva ventana para la impresión
+        const printWindow = window.open('', '_blank');
+
+        // Construir el contenido HTML para la impresión
+        let content = `
+        <html>
+        <head>
+            <title>Imprimir Factura</title>
+            <style>
+                body { font-family: Arial, sans-serif; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid black; padding: 8px; text-align: left; }
+                th { background-color: #f4f4f4; }
+                h1 { text-align: center; }
+            </style>
+        </head>
+        <body>
+            <h1>Factura</h1>
+            <table>
+                <tr><th>ID:</th><td>${rowData.Id}</td></tr>
+                <tr><th>Reservación ID:</th><td>${rowData.ReservacionId}</td></tr>
+                <tr><th>Fecha de Pago:</th><td>${new Date(rowData.FechaPago).toLocaleDateString()}</td></tr>
+                <tr><th>Método de Pago:</th><td>${rowData.MetodoPagoId}</td></tr>
+                <tr><th>Monto Pagado:</th><td>${rowData.MontoPagado}</td></tr>
+                <tr><th>Estado:</th><td>${rowData.Estado}</td></tr>
+            </table>
+        </body>
+        </html>
+    `;
+
+        // Escribir el contenido en la nueva ventana
+        printWindow.document.write(content);
+        printWindow.document.close();
+
+        // Imprimir automáticamente después de cargar
+        setTimeout(() => {
+            printWindow.print();
+        }, 500);
     }
 </script>
 

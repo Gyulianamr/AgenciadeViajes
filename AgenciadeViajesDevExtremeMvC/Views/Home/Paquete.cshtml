@@ -21,7 +21,6 @@
 
         columns.AddFor(m => m.Nombre);
 
-        columns.AddFor(m => m.PrecioTotal);
 
         columns.AddFor(m => m.DestinoId).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Destino").LoadAction("Get").Key("Id"))
@@ -62,6 +61,8 @@
         columns.AddFor(m => m.Duracion_Dias);
 
         columns.AddFor(m => m.FechaExpiracion);
+        columns.AddFor(m => m.PrecioTotal);
+
 
         columns.AddFor(m => m.Estado);
     })
